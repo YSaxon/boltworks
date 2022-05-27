@@ -4,6 +4,7 @@ import inspect
 import shlex
 
 import makefun
+import slack_bolt.kwargs_injection.args
 
 
 class SlackArgParseFormatter(argparse.HelpFormatter):
@@ -15,34 +16,7 @@ class SlackArgParseFormatter(argparse.HelpFormatter):
         )
 
 
-possible_slack_args = [
-    "logger",
-    "client",
-    "req",
-    "request",
-    "resp",
-    "response",
-    "context",
-    # payload
-    "body",
-    "options",
-    "shortcut",
-    "action",
-    "view",
-    "command",
-    "event",
-    "message",
-    "step",
-    # utilities
-    "ack",
-    "say",
-    "respond",
-    # middleware
-    "next",
-    "next_",
-    # error handler
-    "error",
-]
+possible_slack_args = list(slack_bolt.kwargs_injection.args.Args.__annotations__.keys())
 
 
 def argparse_command(argparser: argparse.ArgumentParser, echo_back=True, do_ack=True):
