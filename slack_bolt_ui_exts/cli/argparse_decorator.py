@@ -7,6 +7,10 @@ from typing import Optional, Union
 
 import makefun
 import slack_bolt.kwargs_injection.args
+import slack_sdk
+from slack_bolt import Args
+from slack_bolt_ui_exts.helper.safe_post_blockquotes import \
+    safe_post_in_blockquotes
 
 NoneType = type(None)
 
@@ -20,9 +24,6 @@ class SlackArgParseFormatter(argparse.HelpFormatter):
         )
 
 
-possible_slack_args = list(slack_bolt.kwargs_injection.args.Args.__annotations__.keys())
-
-
 def argparse_command(argparser:Optional[argparse.ArgumentParser]=None,echo_back=True,do_ack=True,automagic=False):
     if not argparser:
         if not automagic:
@@ -30,9 +31,8 @@ def argparse_command(argparser:Optional[argparse.ArgumentParser]=None,echo_back=
         argparser=argparse.ArgumentParser()
 
     argparser_dests=[a.dest for a in argparser._actions if a.dest !="help"]
-    argname_conflicts=[dest for dest in argparser_dests if dest in possible_slack_args]
-    if argname_conflicts:
-        raise ValueError(f"One or more dest param names in your argparser conflict with built in param names used by slack bolt: {', '.join(argname_conflicts)}\nTry setting the `dest` argument in your argparser action to something else")
+    if "args" in argparser_dests:
+        raise ValueError(f"The 'args' param name is reserved for Slack, so you can't use it for an argparser argument name.\nTry setting `the` dest parameter for that action to something else")
     def _mid_func(decorated_function):
         midfunc_argparser=argparser
         deco_sig=inspect.signature(decorated_function)
@@ -52,52 +52,45 @@ def argparse_command(argparser:Optional[argparse.ArgumentParser]=None,echo_back=
 
         deco_extra_args_in_deco=[a for a in deco_sig.parameters.values()
                                                   if a.kind is not a.VAR_KEYWORD
-                                                  and a.name not in possible_slack_args
                                                   and a.name not in argparser_dests]
         deco_extra_args_in_deco_without_defaults=[a for a in deco_extra_args_in_deco if a.default is a.empty]
         if not automagic and deco_extra_args_in_deco_without_defaults:
-            raise ValueError(f"The method you are decorating has one or more parameters without defaults defined that your argparser is not set to fill and are not slack bolt arguments:{','.join(deco_extra_args_in_deco)}")
+            raise ValueError(f"The method you are decorating has one or more parameters without defaults defined that your argparser is not set to fill:{','.join(deco_extra_args_in_deco)}")
         if automagic and deco_extra_args_in_deco:
             midfunc_argparser = automagically_add_args_to_argparser(decorated_function, midfunc_argparser, deco_extra_args_in_deco)
 
-        def _inner_func_to_return_to_slack(command,respond,ack,say,context,**other_slackvars):
+        def _inner_func_to_return_to_slack(args:Args):
             def fn(message,file=None):
-                respond(text="```"+message+"```")
-                ack()
+                safe_post_in_blockquotes(args.respond,message)
+                args.ack()
             innerfunc_argparser=copy.deepcopy(midfunc_argparser)#so we can have _print_message be unique to each call
             innerfunc_argparser.formatter_class=SlackArgParseFormatter
             innerfunc_argparser._print_message=fn
 
+            if args.command:
+                command_base=args.command['command'].replace("*","") if 'command' in args.command else '<cmd>'
+                command_args=shlex.split(args.command['text'].replace("*","")) if 'text' in args.command else []
+            elif args.message:
+                split_message=shlex.split(args.message['text'].replace("*",""))
+                command_base=split_message[0]
+                command_args=split_message[1:]
+            else: raise Exception("This class is only to be used with @command or @message")
 
-            command['text']=command['text'] if 'text' in command else ''
-            # command['text']=unmark(command['text'])# this was an attempt to remove markup formatting but failed because inherently impossible to do reliably
+            # unfortunately it's not possible to perfectly strip out the markup formatting so for now we are just stripping out asterisks
             # whenever they add 'blocks' to the command response, we can parse that to get the exact plaintext representation
             # see also https://stackoverflow.com/a/70627214/10773089
-            args_split=shlex.split(command['text'])
-            innerfunc_argparser.prog=command['command'] if 'command' in command else '<cmd>'
-            parsed_params=vars(innerfunc_argparser.parse_args(args_split))
+
+            innerfunc_argparser.prog=command_base
+            parsed_params=vars(innerfunc_argparser.parse_args(command_args))
 
             if do_ack:
-                ack()
+                args.ack()
             if echo_back:
-                say(text=f"*{command['command']} {(command['text'] if command['text'] else '')}*  \t(run by <@{context['user_id']}>)")
+                args.say(text=f"*{command_base} {(shlex.join(command_args))}*  \t(run by <@{args.context['user_id']}>)")
 
-            possible_slackvars_to_pass=dict(command=command,respond=respond,ack=ack,say=say,context=context,**other_slackvars)
-
-            vars_to_pass={k:v for k,v in possible_slackvars_to_pass.items() if not (k in possible_slack_args and k not in deco_argnames)}#filter out slackvars the decorated func doesn't want
-            vars_to_pass.update(parsed_params)#note that if somehow there is still a conflict between argparser and slack vars, argparser will win out at this stage
+            vars_to_pass={'args':args, **parsed_params}
             return decorated_function(**vars_to_pass)
-
-        inner_sig=inspect.signature(_inner_func_to_return_to_slack)
-        all_inner_but_final_varkwargs=list(inner_sig.parameters.values())[:-1] #or else maybe filter out varkwargs?
-        aibfv_names=[p.name for p in all_inner_but_final_varkwargs]
-        # we could possibly just make that a static list aibfv_names=["command","respond","ack","say","context"]
-
-        slack_params_to_add_from_decorated_func=[p for p in deco_sig.parameters.values() if p.name in possible_slack_args and p.name not in aibfv_names]
-        signature_for_slack=deco_sig.replace(parameters=all_inner_but_final_varkwargs+slack_params_to_add_from_decorated_func)
-        func_to_return_to_slack=makefun.create_function(signature_for_slack,_inner_func_to_return_to_slack,decorated_function.__name__)
-
-        return func_to_return_to_slack
+        return _inner_func_to_return_to_slack
 
     #on init, it will return a function that does all the above stuff when run
     return _mid_func
