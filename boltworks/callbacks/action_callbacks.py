@@ -16,9 +16,11 @@ from slack_sdk.webhook import WebhookResponse
 prefix_for_callback="rcb_"
 
 class ActionCallbackFunction(Protocol):
-     def __call__(self, args:Args, value:Optional[str]) -> Optional[Union[BoltResponse,WebhookResponse]]: ...
+     def __call__(self, args:Args): ...
+class ActionValueCallbackFunction(Protocol):
+     def __call__(self, args:Args, value:Optional[str]): ...
 class ViewCallbackFunction(Protocol):
-     def __call__(self, args:Args, flat_values:dict[str,str]) -> Optional[Union[BoltResponse,WebhookResponse]]: ...
+     def __call__(self, args:Args, flat_values:dict[str,str]): ...
 
 
 class ActionCallbacks:
@@ -31,11 +33,14 @@ class ActionCallbacks:
         args.ack()
         if args.action:
             callback_key=args.action['action_id'][len(prefix_for_callback):]
-            value = args.action['selected_option']['value'] if 'selected_option' in args.action and 'value' in args.action['selected_option'] else None  #menu option
-            callback_func:ActionCallbackFunction=self._cache[callback_key]
-            response=callback_func(args=args,value=value)
+            callback_func=self._cache[callback_key]
+            if "value" in inspect.signature(callback_func).parameters:
+                value = args.action['selected_option']['value'] if 'selected_option' in args.action and 'value' in args.action['selected_option'] else None  #menu option   
+                response=callback_func(args=args,value=value)
+            else:
+                response=callback_func(args=args)
             return response
-
+        
     def get_button_register_callback(self,
                     text,
                     callback_action:ActionCallbackFunction,
@@ -61,7 +66,7 @@ class ActionCallbacks:
     def get_menu_register_callback(self,
         options:Optional[Sequence[Union[dict, Option]]],
         placeholder: Optional[Union[str, PlainTextObject]],
-        callback_action:ActionCallbackFunction,
+        callback_action:ActionValueCallbackFunction,
         **formattingOptions)->StaticSelectElement:
             callback_key=str(uuid.uuid1())
             self._cache[callback_key]=callback_action
