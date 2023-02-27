@@ -59,11 +59,12 @@ These callbacks can themselves post UI elements with more callbacks for more com
 ```
 DISK_CACHE_DIR="~/.diskcache"
 from boltworks import ActionCallbacks,DiskCacheKVSTore
+from diskcache import Cache #pip install diskcache
 
 disk_cache=DiskCacheKVSTore(Cache(directory=DISK_CACHE_DIR))
 callbacks=ActionCallbacks(app,disk_cache.using_serializer(dill))
 
-def get_elapsed_time(args:Args, start_time:datetime):
+def get_elapsed_time(args:Args, start:datetime):
     now = datetime.now()
     diff = now - start
     days, seconds = diff.days, diff.seconds
@@ -71,19 +72,19 @@ def get_elapsed_time(args:Args, start_time:datetime):
 
     formatted_diff = f"{days} day{'s' if days > 1 else ''}, "
     formatted_diff += f"{hours:02d}:{minutes:02d}:{seconds:02d}"
-    args.respond(f"time elapsed: {formatted_now}")
+    args.respond(f"time elapsed: {formatted_diff}")
     
 def start_timer(args:Args):
   now=datetime.now()
-  get_elapsed_button=callbacks.get_button_register_callback("get elapsed time",partial(callback_get_elapsed_time,start_time=now))
+  get_elapsed_button=callbacks.get_button_register_callback("get elapsed time",partial(get_elapsed_time,start=now))
   timer_started_message="Timer started at "+now.strftime("%A, %B %d, %Y %I:%M:%S %p")
-  blocks=slack_sdk.models.blocks.SectionBlock(text=timer_started_message,accessory=get_elapsed_button)
-  args.say(blocks=blocks)
+  block=slack_sdk.models.blocks.SectionBlock(text=timer_started_message,accessory=get_elapsed_button)
+  args.say(blocks=[block])
 
 
-start_timer_button=callbacks.get_button_register_callback("start a timer",callback_start_timer)
-timer_start_blocks=slack_sdk.models.blocks.SectionBlock(text="click here to start a timer",accessory=start_timer_button)
-app.client.chat_postMessage(blocks=timer_start_blocks,channel=CHANNEL_ID)
+start_timer_button=callbacks.get_button_register_callback("start a timer",start_timer)
+timer_start_block=slack_sdk.models.blocks.SectionBlock(text="click here to start a timer",accessory=start_timer_button)
+app.client.chat_postMessage(blocks=[timer_start_block],channel=CHANNEL_ID)
 ````
 
 ## GUI - NodeTreeUI
