@@ -5,7 +5,7 @@ from slack_bolt import App, Args
 from slack_bolt_ui_exts.helper.kvstore import KVStoreWithSerializer
 
 
-class ThreadCallbacks():
+class MsgThreadCallbacks():
     def __init__(self,app:App,kvstore:KVStoreWithSerializer):
         self._callback_store=kvstore.namespaced("thread_callback")
         app.message(re.compile('.*'))(self.check_for_thread_reply_callback)
