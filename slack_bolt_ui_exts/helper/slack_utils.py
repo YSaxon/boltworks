@@ -2,7 +2,13 @@ from __future__ import annotations
 
 import textwrap
 from typing import Callable
+from slack_sdk.models.blocks import SectionBlock
 
+def simple_slack_block(text:str):
+    if len(text) >= 3000: #in the unlikely that this single block is too big by itself, truncate it
+        text=text[:2845] + ' \n_..(this block was truncated due to slack limits).._'
+    if not text: text = " " #bugfix, an empty string results in an illegal block
+    return SectionBlock(text=text)
 
 def safe_post_in_blockquotes(chatpostmethod:Callable,*args,**kwargs):
     if "blocks" in kwargs:
