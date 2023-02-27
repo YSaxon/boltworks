@@ -1,6 +1,4 @@
-
 from __future__ import annotations
-
 from typing import Iterable, Tuple, Union, overload
 
 
@@ -15,7 +13,7 @@ class ExpandPointer:
     def __getitem__(self, index: int) -> int: ...
     @overload
     def __getitem__(self, index: slice) -> ExpandPointer: ...
-    def __getitem__(self, index: Union[int, slice]) -> Union[int, 'ExpandPointer']:
+    def __getitem__(self, index: Union[int, slice]) -> Union[int, ExpandPointer]:
         if isinstance(index, int):
             return self._values[index]
         elif isinstance(index, slice):
