@@ -9,7 +9,7 @@ import makefun
 import slack_bolt.kwargs_injection.args
 import slack_sdk
 from slack_bolt import Args
-from slack_bolt_ui_exts.helper.safe_post_blockquotes import \
+from boltworks.boltworks.helper.slack_utils import \
     safe_post_in_blockquotes
 
 NoneType = type(None)

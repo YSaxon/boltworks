@@ -2,7 +2,7 @@ import re
 from typing import Any, Callable
 
 from slack_bolt import App, Args
-from slack_bolt_ui_exts.helper.kvstore import KVStoreWithSerializer
+from boltworks.boltworks.helper.kvstore import KVStoreWithSerializer
 
 
 class MsgThreadCallbacks():

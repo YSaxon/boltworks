@@ -14,8 +14,8 @@ from slack_sdk.models.blocks import (ActionsBlock, Block, ButtonElement,
                                      SectionBlock, StaticSelectElement)
 from slack_sdk.models.blocks.block_elements import MarkdownTextObject, Option
 from slack_sdk.webhook import WebhookResponse
-from boltworks.slack_bolt_ui_exts.gui.expandpointer import ExpandPointer
-from boltworks.slack_bolt_ui_exts.helper.kvstore import KVStore
+from boltworks.boltworks.gui.expandpointer import ExpandPointer
+from boltworks.boltworks.helper.kvstore import KVStore
 from static_utils.slack_block_utils import simple_slack_block
 
 NAMELESS_FMT_STR_EXPAND="expand {}"

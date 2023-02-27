@@ -8,7 +8,7 @@ from typing import Optional, Protocol, Sequence, Union
 from slack_bolt import Args
 from slack_bolt.app import App
 from slack_bolt.response.response import BoltResponse
-from slack_bolt_ui_exts.helper.kvstore import KVStoreWithSerializer
+from boltworks.boltworks.helper.kvstore import KVStoreWithSerializer
 from slack_sdk.models.blocks import ButtonElement, StaticSelectElement
 from slack_sdk.models.blocks.block_elements import Option, PlainTextObject
 from slack_sdk.webhook import WebhookResponse

@@ -3,7 +3,7 @@ from __future__ import annotations
 import contextlib
 
 import diskcache.core
-from serializers import Serializable
+from .serializers import Serializable
 
 
 class KVStore:
