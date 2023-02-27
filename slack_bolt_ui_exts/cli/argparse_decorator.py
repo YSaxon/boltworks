@@ -52,6 +52,7 @@ def argparse_command(argparser:Optional[argparse.ArgumentParser]=None,echo_back=
 
         deco_extra_args_in_deco=[a for a in deco_sig.parameters.values()
                                                   if a.kind is not a.VAR_KEYWORD
+                                                  and a.name != 'args'
                                                   and a.name not in argparser_dests]
         deco_extra_args_in_deco_without_defaults=[a for a in deco_extra_args_in_deco if a.default is a.empty]
         if not automagic and deco_extra_args_in_deco_without_defaults:
