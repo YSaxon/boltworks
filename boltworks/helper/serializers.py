@@ -1,4 +1,4 @@
-from typing import Any, Protocol, Union
+from typing import Any, Callable, Protocol, Union
 
 import itsdangerous
 
@@ -7,7 +7,7 @@ import itsdangerous
 json, pickle, and dill all qualify as Serializer (in ascending order of heavyweightness)
 """
 class Serializer(Protocol):
-    def loads(self, data: bytes)->Any: ...
+    loads:Callable[...,Any]
     def dumps(self, obj) -> bytes: ...
 
 class SignedSerializer(Serializer):
