@@ -13,6 +13,8 @@ from .callbacks.thread_callbacks import MsgThreadCallbacks
 
 from .helper.kvstore import DiskCacheKVSTore
 
+from .helper.serializers import SignedSerializer
+
 __all__ = [
     'TreeNodeUI',
     'TreeNode',
@@ -24,5 +26,6 @@ __all__ = [
     'argparse_command',
     'ActionCallbacks',
     'MsgThreadCallbacks',
-    'DiskCacheKVSTore'
+    'DiskCacheKVSTore',
+    'SignedSerializer'
 ]
