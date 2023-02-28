@@ -4,7 +4,7 @@ import itsdangerous
 
 
 """
-json, pickle, and dill all qualify as Serializer (in ascending order of heavyweightness)
+pickle and dill both qualify as Serializers (in ascending order of heavyweightness)
 """
 class Serializer(Protocol):
     loads:Callable[...,Any]
