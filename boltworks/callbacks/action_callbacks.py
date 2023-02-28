@@ -1,4 +1,5 @@
 from __future__ import annotations
+import inspect
 
 import re
 import uuid
