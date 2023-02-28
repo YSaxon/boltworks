@@ -3,7 +3,7 @@ from __future__ import annotations
 import contextlib
 
 import diskcache.core
-from .serializers import Serializable
+from .serializers import Serializer
 
 
 class KVStore:
@@ -17,11 +17,11 @@ class KVStore:
 
     def namespaced(self,prefix:str)->KVStore:...
 
-    def using_serializer(self,serializer:Serializable):
+    def using_serializer(self,serializer:Serializer):
         return KVStoreWithSerializer(self,serializer)
 
 class KVStoreWithSerializer(KVStore):
-    def __init__(self,kvstore:KVStore,serializer:Serializable):
+    def __init__(self,kvstore:KVStore,serializer:Serializer):
         if isinstance(kvstore,KVStoreWithSerializer):
             self._inner_kvstore:KVStore=kvstore._inner_kvstore #so we don't wind up serializing twice
         else:

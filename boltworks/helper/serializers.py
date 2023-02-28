@@ -4,14 +4,14 @@ import itsdangerous
 
 
 """
-json, pickle, and dill all qualify as Serializable (in ascending order of heavyweightness)
+json, pickle, and dill all qualify as Serializer (in ascending order of heavyweightness)
 """
-class Serializable(Protocol):
+class Serializer(Protocol):
     def loads(self, data: bytes)->Any: ...
     def dumps(self, obj) -> bytes: ...
 
-class SignedSerializer(Serializable):
-    def __init__(self,serializer:Serializable,symmetric_key,max_age:Union[int,None]=3600*24*90):
+class SignedSerializer(Serializer):
+    def __init__(self,serializer:Serializer,symmetric_key,max_age:Union[int,None]=3600*24*90):
         self._signer=itsdangerous.TimestampSigner(symmetric_key) if max_age else itsdangerous.Signer(symmetric_key)
         self._max_age=max_age
         self._serializer=serializer
