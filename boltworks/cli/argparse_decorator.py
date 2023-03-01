@@ -89,7 +89,9 @@ def argparse_command(argparser:Optional[argparse.ArgumentParser]=None,echo_back=
             if echo_back:
                 args.say(text=f"*{command_base} {(shlex.join(command_args))}*  \t(run by <@{args.context['user_id']}>)")
 
-            vars_to_pass={'args':args, **parsed_params}
+            vars_to_pass={**parsed_params}
+            if 'args' in deco_argnames:
+                vars_to_pass['args']=args
             return decorated_function(**vars_to_pass)
         return _inner_func_to_return_to_slack
 
