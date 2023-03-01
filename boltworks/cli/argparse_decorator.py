@@ -106,7 +106,7 @@ def automagically_add_args_to_argparser(decorated_function, midfunc_argparser, d
             arg_default = arg.default if arg.default is not arg.empty else None
             if arg.name not in type_hints:
                 if not type(arg_default) in supported_simple_types:#which should also helpfully catch if the arg_default == None, or a typeless list, in which case we can't infer type from it
-                    raise ValueError(f"The method you are decorating has a parameter `{arg.name}` not filled by slack or the argparser you provided, and we can't automagically extend your argparser because the parameter does not have a type hint, nor does it have a default value whose type we can easily infer")
+                    raise ValueError(f"Automagic failed, please add a type hint for `{arg.name}`.\nThe method you are decorating has a parameter `{arg.name}` not filled by an argparser, and we can't automagically extend your argparser because the parameter does not have a type hint, nor does it have a default value whose type we can easily infer")
                 nargs=None
                 arg_type=type(arg_default)
                 ultimate_type=type(arg_default)
@@ -115,7 +115,7 @@ def automagically_add_args_to_argparser(decorated_function, midfunc_argparser, d
                 arg_type_generic_parent_type=typing.get_origin(arg_type)
                 is_simple_type=arg_type in supported_simple_types
                 is_generic_type=arg_type_generic_parent_type in [list,Union]
-                type_error_message=f"The method you are decorating has a parameter `{arg.name}` not filled by slack or the argparser you provided, and we can't automagically extend your argparser because the parameter's type hint is {arg_type} rather than one of the following Supported Types: {','.join([str(t) for t in supported_simple_types])}, or an Optional[SupportedType], list[SupportedType], or Optional[list[SupportedType]]"
+                type_error_message=f"Automagic failed, please use an argparser `{arg.name}`.\nThe method you are decorating has a parameter `{arg.name}` not filled by an argparser, and we can't automagically extend your argparser because the parameter's type hint is {arg_type} rather than one of the following supported types: {','.join([str(t) for t in supported_simple_types])}, or an Optional[SupportedType], list[SupportedType], or Optional[list[SupportedType]]"
                 if not is_simple_type and not is_generic_type:#optional type ends up as Union, but we don't officially support Union
                     raise ValueError(type_error_message)
                 if is_simple_type:
