@@ -1,13 +1,11 @@
 import argparse
+from argparse import ArgumentParser
 import copy
 import inspect
 import shlex
 import typing
 from typing import Optional, Union
 
-import makefun
-import slack_bolt.kwargs_injection.args
-import slack_sdk
 from slack_bolt import Args
 from boltworks.boltworks.helper.slack_utils import \
     safe_post_in_blockquotes
@@ -25,11 +23,11 @@ class SlackArgParseFormatter(argparse.HelpFormatter):
 
 RESERVED_SLACK_ARGS = ["args",*Args.__annotations__.keys()]
 
-def argparse_command(argparser:Optional[argparse.ArgumentParser]=None,echo_back=True,do_ack=True,automagic=False):
+def argparse_command(argparser:Optional[ArgumentParser]=None,echo_back=True,do_ack=True,automagic=False):
     if not argparser:
         if not automagic:
             raise ValueError("If you don't pass in an argparser, you must set automagic to True")
-        argparser=argparse.ArgumentParser()
+        argparser=ArgumentParser()
 
     argparser_dests=[a.dest for a in argparser._actions if a.dest !="help"]
     
