@@ -23,6 +23,7 @@ class SlackArgParseFormatter(argparse.HelpFormatter):
             width=80,
         )
 
+RESERVED_SLACK_ARGS = ["args",*Args.__annotations__.keys()]
 
 def argparse_command(argparser:Optional[argparse.ArgumentParser]=None,echo_back=True,do_ack=True,automagic=False):
     if not argparser:
@@ -31,8 +32,12 @@ def argparse_command(argparser:Optional[argparse.ArgumentParser]=None,echo_back=
         argparser=argparse.ArgumentParser()
 
     argparser_dests=[a.dest for a in argparser._actions if a.dest !="help"]
-    if "args" in argparser_dests:
-        raise ValueError(f"The 'args' param name is reserved for Slack, so you can't use it for an argparser argument name.\nTry setting `the` dest parameter for that action to something else")
+    
+    argname_conflicts=[dest for dest in argparser_dests if dest in RESERVED_SLACK_ARGS]
+    if argname_conflicts:
+        raise ValueError(f"One or more dest param names in your argparser conflict with built in param names used by slack bolt: {', '.join(argname_conflicts)}\nTry setting the `dest` argument for those argparser actions to something else")
+    # if "args" in argparser_dests:
+    #     raise ValueError(f"The 'args' param name is reserved for Slack, so you can't use it for an argparser argument name.\nTry setting `the` dest parameter for that action to something else")
     def _mid_func(decorated_function):
         midfunc_argparser=argparser
         deco_sig=inspect.signature(decorated_function)
@@ -52,7 +57,7 @@ def argparse_command(argparser:Optional[argparse.ArgumentParser]=None,echo_back=
 
         deco_extra_args_in_deco=[a for a in deco_sig.parameters.values()
                                                   if a.kind is not a.VAR_KEYWORD
-                                                  and a.name != 'args'
+                                                  and a.name not in RESERVED_SLACK_ARGS 
                                                   and a.name not in argparser_dests]
         deco_extra_args_in_deco_without_defaults=[a for a in deco_extra_args_in_deco if a.default is a.empty]
         if not automagic and deco_extra_args_in_deco_without_defaults:
@@ -82,17 +87,21 @@ def argparse_command(argparser:Optional[argparse.ArgumentParser]=None,echo_back=
             # see also https://stackoverflow.com/a/70627214/10773089
 
             innerfunc_argparser.prog=command_base
+            
+            #maybe add more verbose explanation if you use `--var`` when it should have been `var`, or vice versa
             parsed_params=vars(innerfunc_argparser.parse_args(command_args))
 
             if do_ack:
                 args.ack()
             if echo_back:
                 args.say(text=f"*{command_base} {(shlex.join(command_args))}*  \t(run by <@{args.context['user_id']}>)")
-
-            vars_to_pass={**parsed_params}
-            if 'args' in deco_argnames:
-                vars_to_pass['args']=args
-            return decorated_function(**vars_to_pass)
+            
+            available_slackvars_to_pass={'args':args,**vars(args)}
+            if deco_varkwargs:#if there's a varkwargs then just pass everything
+                slackvars_to_pass=available_slackvars_to_pass
+            else:
+                slackvars_to_pass={k:v for k,v in available_slackvars_to_pass.items() if k in deco_argnames} 
+            return decorated_function(**slackvars_to_pass,**parsed_params)
         return _inner_func_to_return_to_slack
 
     #on init, it will return a function that does all the above stuff when run
@@ -108,7 +117,7 @@ def automagically_add_args_to_argparser(decorated_function, midfunc_argparser, d
             arg_default = arg.default if arg.default is not arg.empty else None
             if arg.name not in type_hints:
                 if not type(arg_default) in supported_simple_types:#which should also helpfully catch if the arg_default == None, or a typeless list, in which case we can't infer type from it
-                    raise ValueError(f"Automagic failed, please add a type hint for `{arg.name}`.\nThe method you are decorating has a parameter `{arg.name}` not filled by an argparser, and we can't automagically extend your argparser because the parameter does not have a type hint, nor does it have a default value whose type we can easily infer")
+                    raise ValueError(f"Automagic failed, please add a type hint for `{arg.name}`.\nThe method you are decorating has a parameter `{arg.name}` not filled by slack or an argparser, and we can't automagically extend your argparser because the parameter does not have a type hint, nor does it have a default value whose type we can easily infer")
                 nargs=None
                 arg_type=type(arg_default)
                 ultimate_type=type(arg_default)
@@ -117,7 +126,7 @@ def automagically_add_args_to_argparser(decorated_function, midfunc_argparser, d
                 arg_type_generic_parent_type=typing.get_origin(arg_type)
                 is_simple_type=arg_type in supported_simple_types
                 is_generic_type=arg_type_generic_parent_type in [list,Union]
-                type_error_message=f"Automagic failed, please use an argparser `{arg.name}`.\nThe method you are decorating has a parameter `{arg.name}` not filled by an argparser, and we can't automagically extend your argparser because the parameter's type hint is {arg_type} rather than one of the following supported types: {','.join([str(t) for t in supported_simple_types])}, or an Optional[SupportedType], list[SupportedType], or Optional[list[SupportedType]]"
+                type_error_message=f"Automagic failed, please use an ArgumentParser for `{arg.name}` or use a simpler type.\nThe method you are decorating has a parameter `{arg.name}` not filled by slack or an argparser, and we can't automagically extend your argparser because the parameter's type hint is {arg_type} rather than one of the following supported types: {','.join([str(t) for t in supported_simple_types])}, or an Optional[SupportedType], list[SupportedType], or Optional[list[SupportedType]]"
                 if not is_simple_type and not is_generic_type:#optional type ends up as Union, but we don't officially support Union
                     raise ValueError(type_error_message)
                 if is_simple_type:
