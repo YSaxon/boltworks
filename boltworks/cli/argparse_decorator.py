@@ -24,6 +24,57 @@ class SlackArgParseFormatter(argparse.HelpFormatter):
 RESERVED_SLACK_ARGS = ["args",*Args.__annotations__.keys()]
 
 def argparse_command(argparser:Optional[ArgumentParser]=None,echo_back=True,do_ack=True,automagic=False):
+    """
+    This is the primary method for this feature. It is a decorator that you put onto your Slack Command Method to parse the arguments in the command and pass them to your function.
+
+    You can either construct an argparse.ArgumentParser yourself to do the work (better)
+    Or set automagic=True to have a simple ArgumentParser constructed for you based on your method signature (faster)
+    
+    Any parameter names in your method signature which Slack would usually inject (eg 'args' or 'say' or 'logger' etc) will be passed through.
+    
+    ```
+    argparser = argparse.ArgumentParser()
+    argparser.add_argument("--a", nargs="*", type=float)
+    argparser.add_argument("-b", type=int)
+    argparser.add_argument("c")
+    argparser.add_argument("d", nargs="?", default="default")
+    
+    @app.command("/dothething")
+    @argparse_command(parser)
+    def your_method_name(args:Args, say, a, b, c, d):
+        ...
+    ```
+    
+    can be called as `/dothething cc dd --a 1 2 3 -b 5`
+    
+    In automagic mode, to have a parameter be called as --foo, make it KeywordOnly by placing it after a single asterisk. Otherwise the argument name is silent
+    ```
+    @app.command("/dotheotherthing")
+    @argparse_command(automagic=True)
+    def your_method_name(args:Args, say, a:str, b:list[int], *, c:int, d:int):
+        ...
+    ```
+    can be called as `/dotheotherthing test 1 2 3 --d 6 --c 5`
+    
+    (You are allowed to use Automagic together with an ArgumentParser as well to fill in an extra arg not handled by the parser)
+    
+    
+    In both cases, the argparser library will always insert a `--help` parameter, though it will be better documented if you build your own ArgumentParser.
+    It's recommended when you configure the Command in Slack to configure the usage string as `[--help]` to let people know they can do that.
+    
+    Args:
+        argparser (Optional[ArgumentParser]): An optional argparse.ArgumentParser object with which to parse the arguments
+        echo_back (bool, optional): _description_. Defaults to True. Calls 'say' to echo back the command executed to the user before executing it.
+        do_ack (bool, optional): _description_. Defaults to True. Calls Slack's ack() method for you upon succesful parsing, so you don't have to do it yourself.
+        automagic (bool, optional): _description_. Defaults to False. Enables automagic parsing of arguments based on your method signature.
+
+    Raises:
+        ValueError: various ValueErrors can be raised, generally at the time of creation of the argparse_handler
+        * If there are conflicts between slack-reserved argnames and your argparser names
+        * If you don't have automagic set to True and don't pass an ArgumentParser, or the ArgumentParser doesn't handle all your method's params
+        * If you use automagic, but don't sufficiently type-hint your parameters, or the types are too complicated etc.
+
+    """  
     if not argparser:
         if not automagic:
             raise ValueError("If you don't pass in an argparser, you must set automagic to True")
