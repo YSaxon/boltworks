@@ -292,7 +292,7 @@ class TreeNode:
     def __init__(
         self,
         formatblocks:Union[list[Block],Block,str],
-        children_containers:ChildNodeContainer|ChildNodeMenuContainer|list[ChildNodeContainer|ChildNodeMenuContainer]=[],
+        children_containers:ChildNodeContainer|ChildNodeMenuContainer|list[ChildNodeContainer|ChildNodeMenuContainer]|None=None,
         first_child_container_on_side:bool=None,
         auto_expand_children_if_only_one=False):
         """_summary_
@@ -304,7 +304,7 @@ class TreeNode:
             auto_expand_children_if_only_one (bool, optional): This option is deprecated and may be removed. It forces expand for any child that itself only has a single child node. Defaults to False.
         """
         self.formatblocks=formatblocks
-        self.children_containers=children_containers if isinstance(children_containers,list) else [children_containers]
+        self.children_containers=children_containers if isinstance(children_containers,list) else [children_containers] if children_containers else []
         if first_child_container_on_side is not None:
             self.first_child_container_on_side=first_child_container_on_side # override
         else: self.first_child_container_on_side = len(self.children_containers)==1 # default behavior for side placement
