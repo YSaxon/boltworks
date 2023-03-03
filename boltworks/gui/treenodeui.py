@@ -409,7 +409,7 @@ class StaticSelectMenuChildContainer(ChildNodeMenuContainer):
         else: #one of the options already selected
             return StaticSelectElement(placeholder=self.placeholder or "",action_id=TreeNodeUI._serialize_callback(rootkey,pointer_to_container),
                                        initial_option=self.options_for_menu[child_already_selected],
-                                    options=[Option(value=str(-1),label=""), *self.options_for_menu])
+                                    options=[Option(value=str(-1),label=" "), *self.options_for_menu]) #-1 to contract all, space to be a valid label
 
 class OverflowMenuChildContainer(ChildNodeMenuContainer):
     def __init__(self,menu_options_and_associated_nodes:list[MenuOption],child_pageination:int=10):
