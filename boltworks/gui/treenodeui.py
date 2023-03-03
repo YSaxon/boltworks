@@ -117,6 +117,7 @@ class TreeNodeUI:
             if response.status_code!=200:
                 respond(f"error in slack handling: {response.body}",replace_original=False)
                 print(f"{datetime.datetime.now()}: error in slack handling: {response.body}")
+        return response
         # if logging.root.level<=logging.DEBUG:
         #     self.profiler.stop()
         #     print(self.profiler.output_text(unicode=True, color=True))
