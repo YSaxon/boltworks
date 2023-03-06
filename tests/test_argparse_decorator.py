@@ -10,7 +10,7 @@ from slack_bolt import Args
 from boltworks import argparse_command
 import pytest
 
-from tests.common import mock_an_args
+from .common import mock_an_args
 
 
 

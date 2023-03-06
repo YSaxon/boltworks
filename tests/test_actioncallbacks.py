@@ -16,14 +16,14 @@ from slack_sdk.web import SlackResponse
 
 from slack_bolt import Respond,Say
 
-from tests.common import get_blocks_from_response_with_assertions, mock_an_args
+from .common import get_blocks_from_response_with_assertions, mock_an_args
 
 sys.path.append(os.path.dirname(os.path.realpath(__file__)) + "/../..")
 
 from boltworks import ActionCallbacks
 from boltworks import DiskCacheKVStore
 
-from common import TOKEN,APPTOKEN,TEST_CHANNEL,DISK_CACHE_DIR
+from .common import TOKEN,APPTOKEN,TEST_CHANNEL,DISK_CACHE_DIR
 
 
 app = App(token=TOKEN)
