@@ -1,7 +1,7 @@
 site_name: Slack Bolt UI Extensions
 # site_url: http://www.jieyu.ai
-repo_url: https://github.com/ysaxon/slack_bolt_ui_exts
-repo_name: slack_bolt_ui_exts
+repo_url: https://github.com/ysaxon/boltworks
+repo_name: boltworks
 #strict: true
 nav:
   - home: index.md
@@ -59,7 +59,7 @@ plugins:
       lang: en
   - mkdocstrings:
       watch:
-        - slack_bolt_ui_exts
+        - boltworks
 extra:
   social:
     - icon: fontawesome/brands/twitter
@@ -71,7 +71,7 @@ extra:
       link: http://www.jieyu.ai
       name: Facebook
     - icon: fontawesome/brands/github
-      link: https://github.com/ysaxon/slack_bolt_ui_exts
+      link: https://github.com/ysaxon/boltworks
       name: Github
     - icon: material/email
       link: "mailto:ysaxon@gmail.com"

@@ -10,7 +10,7 @@
     ".vscode",
     "docs",
     "**/__pycache__",
-    "ysaxon_slack_bolt_ui_exts.egg-info"
+    "ysaxon_boltworks.egg-info"
   ],
 
   "ignore": [

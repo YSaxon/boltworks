@@ -6,7 +6,7 @@ To install Slack Bolt UI Extensions, run this command in your
 terminal:
 
 ``` console
-pip install slack_bolt_ui_exts
+pip install boltworks
 ```
 
 This is the preferred method to install Slack Bolt UI Extensions, as it will always install the most recent stable release.
@@ -22,13 +22,13 @@ the [Github repo][].
 You can either clone the public repository:
 
 ``` console
-git clone git://github.com/ysaxon/slack_bolt_ui_exts
+git clone git://github.com/ysaxon/boltworks
 ```
 
 Or download the [tarball][]:
 
 ``` console
-curl -OJL https://github.com/ysaxon/slack_bolt_ui_exts/tarball/master
+curl -OJL https://github.com/ysaxon/boltworks/tarball/master
 ```
 
 Once you have a copy of the source, you can install it with:

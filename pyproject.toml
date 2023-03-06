@@ -1,8 +1,8 @@
 [tool]
 [tool.poetry]
-name = "slack_bolt_ui_exts"
+name = "boltworks"
 version = "0.1.0"
-homepage = "https://github.com/ysaxon/slack_bolt_ui_exts"
+homepage = "https://github.com/ysaxon/boltworks"
 description = "A collection of decorators and functionns for Slack's bolt library to help you make a better slackbot."
 authors = ["Yaakov Saxon <ysaxon@gmail.com>"]
 readme = "README.md"
@@ -18,7 +18,7 @@ classifiers=[
     'Programming Language :: Python :: 3.10',
 ]
 packages = [
-    { include = "slack_bolt_ui_exts" },
+    { include = "boltworks" },
     { include = "tests", format = "sdist" },
 ]
 
