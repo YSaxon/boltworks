@@ -14,7 +14,9 @@ from ..boltworks.helper.serializers import SignedSerializer
 @pytest.fixture
 def disk_cache():
     with tempfile.TemporaryDirectory() as cachedir:
-        yield diskcache.core.Cache(cachedir)
+        cache=diskcache.core.Cache(cachedir)
+        yield cache
+        cache.close()
 
 @pytest.fixture
 def store(disk_cache): # a simple disk cache store so we can have the consitutent tests of all_tests be tests in their own right for clarity if they fail in simplest case
