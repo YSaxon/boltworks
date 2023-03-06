@@ -11,7 +11,7 @@ from .cli.argparse_decorator import argparse_command
 from .callbacks.action_callbacks import ActionCallbacks
 from .callbacks.thread_callbacks import MsgThreadCallbacks
 
-from .helper.kvstore import DiskCacheKVSTore
+from .helper.kvstore import DiskCacheKVStore
 
 from .helper.serializers import SignedSerializer
 
@@ -26,6 +26,6 @@ __all__ = [
     'argparse_command',
     'ActionCallbacks',
     'MsgThreadCallbacks',
-    'DiskCacheKVSTore',
+    'DiskCacheKVStore',
     'SignedSerializer'
 ]

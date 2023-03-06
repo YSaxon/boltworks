@@ -45,7 +45,7 @@ class KVStoreWithSerializer(KVStore):
         with self._inner_kvstore.transact(retry):
             yield
 
-class DiskCacheKVSTore(KVStore):
+class DiskCacheKVStore(KVStore):
     def __init__(self,disk_cache:diskcache.core.Cache,prefix:str="") -> None:
         self._prefix=prefix
         self._diskcache=disk_cache
@@ -63,4 +63,4 @@ class DiskCacheKVSTore(KVStore):
         with self._diskcache.transact(retry):
             yield
 
-    def namespaced(self,prefix:str): return DiskCacheKVSTore(self._diskcache,prefix)
+    def namespaced(self,prefix:str): return DiskCacheKVStore(self._diskcache,prefix)
