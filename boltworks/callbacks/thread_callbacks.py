@@ -9,12 +9,12 @@ class ThreadCallbackFunction(Protocol):
 class MsgThreadCallbacks():
     def __init__(self,app:App,kvstore:KVStoreWithSerializer):
         self._callback_store=kvstore.namespaced("thread_callback")
-        app.message(re.compile('.*'))(self.check_for_thread_reply_callback)
+        app.message(re.compile('.*'))(self._check_for_thread_reply_callback)
 
     def register_thread_reply_callback(self, ts:str, callback:ThreadCallbackFunction):
         self._callback_store[ts]=callback
 
-    def check_for_thread_reply_callback(self,args:Args):
+    def _check_for_thread_reply_callback(self,args:Args):
         if 'thread_ts' in args.payload:
             thread_ts=args.payload['thread_ts']
             if thread_ts in self._callback_store:
