@@ -7,8 +7,8 @@ import typing
 from typing import Optional, Union
 
 from slack_bolt import Args
-from boltworks.boltworks.helper.slack_utils import \
-    safe_post_in_blockquotes
+from ..helper.slack_utils import safe_post_in_blockquotes
+
 
 NoneType = type(None)
 
