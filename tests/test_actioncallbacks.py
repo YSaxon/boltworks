@@ -63,7 +63,7 @@ def test_simple(fixture:Tuple[App, ActionCallbacks]):
     button=callbacks.get_button_register_callback("(button)",callback_func)
     button=button.to_dict() #assuming test_button_posted_same_as_expected succeeds, this is the same as posting it
         
-    args_mock,respond_mock=mock_an_args()
+    args_mock,respond_mock,_=mock_an_args()
     args_mock.action=dict(action_id=button['action_id'])
     callbacks.do_callback_action(args=args_mock)
     respond_mock.assert_called_once_with("C")
@@ -76,7 +76,7 @@ def test_closure(fixture:Tuple[App, ActionCallbacks]):
     button=callbacks.get_button_register_callback("(button)",callback_func)
     button=button.to_dict() #assuming test_button_posted_same_as_expected succeeds, this is the same as posting it
     
-    args_mock,respond_mock=mock_an_args()
+    args_mock,respond_mock,_=mock_an_args()
     args_mock.action=dict(action_id=button['action_id'])
     callbacks.do_callback_action(args=args_mock)
     respond_mock.assert_called_once_with("A")
@@ -89,7 +89,7 @@ def test_partial_with_injected_var(fixture:Tuple[App, ActionCallbacks]):
     button=callbacks.get_button_register_callback("(button)",partial(callback_func,other_param="B"))
     button=button.to_dict() #assuming test_button_posted_same_as_expected succeeds, this is the same as posting it
           
-    args_mock,respond_mock=mock_an_args()
+    args_mock,respond_mock,_=mock_an_args()
     args_mock.action=dict(action_id=button['action_id'])
     callbacks.do_callback_action(args=args_mock)
     respond_mock.assert_called_once_with("B")
