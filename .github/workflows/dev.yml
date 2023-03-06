@@ -31,6 +31,10 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-versions }}
+        env:
+          apptoken:  ${{ secrets.apptoken }}
+          token: ${{ secrets.token }}
+          channel: ${{ secrets.channel }}
 
       - name: Install dependencies
         run: |
