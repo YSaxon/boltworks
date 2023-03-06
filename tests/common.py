@@ -15,9 +15,9 @@ from slack_sdk.web import SlackResponse
 import os
 
 def _find_test_creds():
-    token = os.getenv('token')
-    apptoken = os.getenv('apptoken')
-    channel = os.getenv('channel')
+    token = os.getenv('TOKEN')
+    apptoken = os.getenv('APPTOKEN')
+    channel = os.getenv('CHANNEL')
     
     if not all((token, apptoken, channel)):
         # Try loading from .creds file
