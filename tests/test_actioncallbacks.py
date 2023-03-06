@@ -26,10 +26,6 @@ from boltworks import DiskCacheKVStore
 from .common import TOKEN,APPTOKEN,TEST_CHANNEL,DISK_CACHE_DIR
 
 
-app = App(token=TOKEN)
-
-
-
 @pytest.fixture
 def fixture():  
     app = App(token=TOKEN)

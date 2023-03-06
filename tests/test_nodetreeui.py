@@ -14,7 +14,6 @@ from .common import TOKEN,APPTOKEN, TEST_CHANNEL, assert_block_text_equals, fake
 
 
 
-app = App(token=TOKEN)
 
 DISK_CACHE_DIR="/tmp/diskcache"
 
