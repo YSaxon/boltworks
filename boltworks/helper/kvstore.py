@@ -39,6 +39,11 @@ class KVStoreWithSerializer(KVStore):
 
     def __delitem__(self, key): return self._inner_kvstore.__delitem__(key)
     def __contains__(self, key): return self._inner_kvstore.__contains__(key)
+    
+    def namespaced(self,prefix:str)->KVStore:
+        return KVStoreWithSerializer(
+            self._inner_kvstore.namespaced(prefix),
+            self._serializer)
 
     @contextlib.contextmanager
     def transact(self, retry=False):
