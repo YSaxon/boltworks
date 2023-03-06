@@ -210,7 +210,8 @@ class TreeNodeUI:
                             rootkey=rootkey,
                             diminish_pageination_by=diminish_pageination_by
                             )
-                    else: # isinstance(selected_container,ChildNodeContainerContainer):
+                    else: 
+                        assert isinstance(selected_container,ChildNodeMenuContainer)
                         selected_container_blocks=self._format_tree_recursive(
                             parentnodes=selected_container.child_nodes[remaining_expandpointer[1]] if selected_container.child_nodes and selected_container.child_nodes[remaining_expandpointer[1]] else [TreeNode("_(this pane is empty)_")],
                             parents_pagination=selected_container.child_pageination,
@@ -293,7 +294,7 @@ class TreeNode:
         self,
         formatblocks:Union[list[Block],Block,str],
         children_containers:ChildNodeContainer|ChildNodeMenuContainer|list[ChildNodeContainer|ChildNodeMenuContainer]|None=None,
-        first_child_container_on_side:bool=None,
+        first_child_container_on_side:Optional[bool]=None,
         auto_expand_children_if_only_one=False):
         """_summary_
 
