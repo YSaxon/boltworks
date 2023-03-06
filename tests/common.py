@@ -1,5 +1,6 @@
 from __future__ import annotations
 from functools import partial
+import tempfile
 from unittest.mock import Mock
 
 from slack_bolt import App, Args
@@ -9,6 +10,30 @@ import slack_sdk
 from slack_sdk.models.blocks.blocks import Block
 from slack_sdk.web import SlackResponse
 
+
+#these are hardcoded to a slack environment used only for running these tests and nothing else
+
+import os
+import yaml
+
+def _find_test_creds():
+    token = os.getenv('token')
+    apptoken = os.getenv('apptoken')
+    channel = os.getenv('channel')
+    
+    if not all((token, apptoken, channel)):
+        # Try loading from .creds file
+        with open('tests/.creds.yml', 'r') as f:
+            creds = yaml.safe_load(f)
+        
+        token = creds['token']
+        apptoken = creds['apptoken']
+        channel = creds['channel']
+    
+    return token, apptoken, channel
+
+TOKEN,APPTOKEN,TEST_CHANNEL=_find_test_creds()
+DISK_CACHE_DIR=tempfile.mkdtemp()
 
 
 def mock_an_args():
