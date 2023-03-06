@@ -48,6 +48,11 @@ pyreadline = {version = "^2.1", optional = true}
 makefun = "^1.13.1"
 slack-bolt = "^1.14.0"
 expiringdict = "^1.2.2"
+more-itertools = "^9.1.0"
+slack-sdk = "^3.20.0"
+dill = "^0.3.6"
+itsdangerous = "^2.1.2"
+diskcache = "^5.4.0"
 
 [tool.poetry.extras]
 test = [
