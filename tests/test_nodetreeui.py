@@ -1,6 +1,7 @@
 
 
 import copy
+import json
 import pytest
 from slack_bolt import App
 from ..boltworks import *
@@ -309,7 +310,81 @@ def test_complex_actual_menuoption(fixture:Tuple[App,TreeNodeUI]):
     
     
     
+#sample json obtained from chatgpt
+json1 =  """
+  {
+  "name": "John Doe",
+  "age": 30,
+  "phoneNumbers": [
+    {
+      "type": "home",
+      "number": "555-1234"
+    },
+    {
+      "type": "work",
+      "number": "555-5678",
+      "extension": "123"
+    }
+  ],
+  "emails": [
+    "john.doe@example.com",
+    "jdoe@example.com"
+  ],
+  "isMarried": false,
+  "favoriteColors": {
+    "primary": "blue",
+    "secondary": "green"
+  },
+  "address": {
+    "street": "123 Main St",
+    "city": "Anytown",
+    "state": "CA",
+    "zip": "12345",
+    "coordinates": {
+      "latitude": 37.1234,
+      "longitude": -122.1234
+    }
+  },
+  "nullValue": null,
+  "emptyValue": ""
+}
+"""
 
     
+def test_json_helper_method(fixture:Tuple[App,TreeNodeUI]):
+    app,treeui=fixture
+    
+    loaded_json=json.loads(json1)
+    
+    rootnode=TreeNode(
+        "json",
+       children_containers=[
+           ButtonChildContainer.forJsonDetails(loaded_json)
+       ]
+    )
+                      
+    response=treeui.post_single_node(TEST_CHANNEL,rootnode)
+    blocks=get_blocks_from_response_with_assertions(response)
+    button=blocks[0]['accessory']
+    
+    #expand details
+    ack=Mock()
+    respond=fake_a_respond_from_response(response)
+    callback_response=treeui._do_callback_action(action=button,ack=ack,respond=respond)
+    callback_blocks=get_blocks_from_response_with_assertions(callback_response)
+    assert '5' in callback_blocks[-1]['accessory']['text']['text']
+    
+    #expand final button
+    final_button=callback_blocks[-1]['accessory']
+    callback_response=treeui._do_callback_action(action=final_button,ack=ack,respond=respond)
+    callback_blocks=get_blocks_from_response_with_assertions(callback_response)
+    assert '2' in callback_blocks[-1]['accessory']['text']['text']
+    
+    #expand new final button
+    final_button=callback_blocks[-1]['accessory']
+    callback_response=treeui._do_callback_action(action=final_button,ack=ack,respond=respond)
+    callback_blocks=get_blocks_from_response_with_assertions(callback_response)
+    assert 'longitude: -122.1234' in callback_blocks[-1]['text']['text']
     
     
+   
