@@ -11,10 +11,8 @@ from slack_sdk.models.blocks.blocks import Block
 from slack_sdk.web import SlackResponse
 
 
-#these are hardcoded to a slack environment used only for running these tests and nothing else
 
 import os
-import yaml
 
 def _find_test_creds():
     token = os.getenv('token')
@@ -24,12 +22,17 @@ def _find_test_creds():
     if not all((token, apptoken, channel)):
         # Try loading from .creds file
         with open('tests/.creds.yml', 'r') as f:
-            creds = yaml.safe_load(f)
+            creds = f.read().strip().splitlines()
         
-        token = creds['token']
-        apptoken = creds['apptoken']
-        channel = creds['channel']
-    
+        creds_dict = {}
+        for line in creds:
+            key, value = line.split(':')
+            creds_dict[key.strip()] = value.strip()
+        
+        if not token: token = creds_dict['token']
+        if not apptoken: apptoken = creds_dict['apptoken']
+        if not channel: channel = creds_dict['channel']
+            
     return token, apptoken, channel
 
 TOKEN,APPTOKEN,TEST_CHANNEL=_find_test_creds()
