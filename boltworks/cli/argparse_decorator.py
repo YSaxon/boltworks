@@ -3,6 +3,7 @@ from argparse import ArgumentParser
 import copy
 import inspect
 import shlex
+import sys
 import typing
 from typing import Optional, Union
 
@@ -66,7 +67,7 @@ def argparse_command(argparser:Optional[ArgumentParser]=None,echo_back=True,do_a
         argparser (Optional[ArgumentParser]): An optional argparse.ArgumentParser object with which to parse the arguments
         echo_back (bool, optional): _description_. Defaults to True. Calls 'say' to echo back the command executed to the user before executing it.
         do_ack (bool, optional): _description_. Defaults to True. Calls Slack's ack() method for you upon succesful parsing, so you don't have to do it yourself.
-        automagic (bool, optional): _description_. Defaults to False. Enables automagic parsing of arguments based on your method signature.
+        automagic (bool, optional): _description_. Defaults to False. Enables automagic parsing of arguments based on your method signature. Only supported on Python>=3.9
 
     Raises:
         ValueError: various ValueErrors can be raised, generally at the time of creation of the argparse_handler
@@ -79,6 +80,9 @@ def argparse_command(argparser:Optional[ArgumentParser]=None,echo_back=True,do_a
         if not automagic:
             raise ValueError("If you don't pass in an argparser, you must set automagic to True")
         argparser=ArgumentParser()
+        
+    if automagic and sys.version_info < (3, 9):
+        raise ValueError("automagic mode is not supported on Python versions < 3.9")
 
     argparser_dests=[a.dest for a in argparser._actions if a.dest !="help"]
     
