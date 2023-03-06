@@ -17,6 +17,10 @@ on:
 jobs:
   # This workflow contains a single job called "build"
   test:
+    env:
+      APPTOKEN:  ${{ secrets.APPTOKEN }}
+      TOKEN: ${{ secrets.TOKEN }}
+      CHANNEL: ${{ secrets.CHANNEL }}
     # The type of runner that the job will run on
     strategy:
       matrix:
@@ -31,10 +35,6 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-versions }}
-        env:
-          APPTOKEN:  ${{ secrets.APPTOKEN }}
-          TOKEN: ${{ secrets.TOKEN }}
-          CHANNEL: ${{ secrets.CHANNEL }}
 
       - name: Install dependencies
         run: |
