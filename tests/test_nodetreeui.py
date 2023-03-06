@@ -57,7 +57,6 @@ def test_simple_actualpost_mockexpand(fixture:Tuple[App,TreeNodeUI]):
     ack.assert_called_once()
     respond.assert_called_once()
     
-    print(respond.call_args)
     assert respond.call_args.kwargs['replace_original']
     replace_blocks=respond.call_args.kwargs['blocks']
     
