@@ -6,6 +6,9 @@ A collection of various extensions for Slack's bolt library to help you more eas
 
 This allows you to use Python's argparse library to process complex command line flags and options in Slack Commands.
 
+All Slack parameters will be passed through to your method; you can use the 'args' catchall, and/or individual arguments like 'respond' or 'context' etc
+All other parameters will be parsed from the command string when the command is run.
+
 #### The explicit way
 
 ```
@@ -85,7 +88,12 @@ def start_timer(args:Args):
 start_timer_button=callbacks.get_button_register_callback("start a timer",start_timer)
 timer_start_block=slack_sdk.models.blocks.SectionBlock(text="click here to start a timer",accessory=start_timer_button)
 app.client.chat_postMessage(blocks=[timer_start_block],channel=CHANNEL_ID)
-````
+```
+
+
+## GUI - ThreadCallbacks
+
+Similiar to ActionCallbacks, this class allows you to register a message's `ts` (timestamp used by slack as a message id), so that your callback will be called any time a message is posted to that Thread.
 
 ## GUI - NodeTreeUI
 
