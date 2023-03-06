@@ -176,19 +176,6 @@ def test_argparsing_automagic_required_defaultlistval_filled():
     
     respond.assert_called_once_with("6")
     
-def test_argparsing_automagic_defaultlistval_unfilled():
-    @argparse_command(automagic=True)
-    def command_handler(args:Args, i:list[int]=[5,3]):
-        args.respond(str(i[1]))
-
-    args,respond,say=mock_an_args()
-
-    args.command=dict(command="/test", text="")
-    
-    command_handler(args=args)
-    
-    respond.assert_called_once_with("3")
-    
     
 def test_argparsing_automagic_defaultlistval_unfilled():
     @argparse_command(automagic=True)
@@ -277,7 +264,6 @@ def test_automagic_all_slackvars_passed_through():
     command_handler(args=args)
     
 def test_argparsing_with_no_slackargs():
-    """Sample pytest test function with the pytest fixture as an argument."""
     
     closure_var=[]
     
@@ -296,7 +282,6 @@ def test_argparsing_with_no_slackargs():
     
     
 def test_argparsing_with_individual_slack_args():
-    """Sample pytest test function with the pytest fixture as an argument."""
     @argparse_command(automagic=True)
     def command_handler(respond, i:int):
         respond(str(i))
@@ -312,7 +297,6 @@ def test_argparsing_with_individual_slack_args():
     
 
 def test_argparsing_automagic_simple_with_individual_slack_args():
-    """Sample pytest test function with the pytest fixture as an argument."""
     @argparse_command(automagic=True)
     def command_handler(respond, i:int):
         respond(str(i))
