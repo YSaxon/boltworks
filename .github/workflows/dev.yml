@@ -32,9 +32,9 @@ jobs:
         with:
           python-version: ${{ matrix.python-versions }}
         env:
-          apptoken:  ${{ secrets.apptoken }}
-          token: ${{ secrets.token }}
-          channel: ${{ secrets.channel }}
+          APPTOKEN:  ${{ secrets.APPTOKEN }}
+          TOKEN: ${{ secrets.TOKEN }}
+          CHANNEL: ${{ secrets.CHANNEL }}
 
       - name: Install dependencies
         run: |
