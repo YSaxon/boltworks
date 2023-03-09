@@ -31,7 +31,7 @@ def _find_test_creds():
         channel = creds['channel']
         webhook_url = creds['webhook_url']
     
-    return token, apptoken, channel
+    return token, apptoken, channel, webhook_url
 
 TOKEN,APPTOKEN,TEST_CHANNEL,WEBHOOK_URL=_find_test_creds()
 DISK_CACHE_DIR=tempfile.mkdtemp()

@@ -21,6 +21,7 @@ jobs:
       APPTOKEN:  ${{ secrets.APPTOKEN }}
       TOKEN: ${{ secrets.TOKEN }}
       CHANNEL: ${{ secrets.CHANNEL }}
+      WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
     # The type of runner that the job will run on
     strategy:
       matrix:
