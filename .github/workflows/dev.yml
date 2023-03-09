@@ -49,6 +49,11 @@ jobs:
         run: ls -l .
 
   publish_dev_build:
+    env:
+        APPTOKEN:  ${{ secrets.APPTOKEN }}
+        TOKEN: ${{ secrets.TOKEN }}
+        CHANNEL: ${{ secrets.CHANNEL }}
+        WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
     # if test failed, we should not publish
     needs: test
     runs-on: ubuntu-latest
