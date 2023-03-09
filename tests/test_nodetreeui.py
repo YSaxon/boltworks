@@ -25,11 +25,13 @@ def fixture():
     handler=SocketModeHandler(app,app_token=APPTOKEN)
     handler.connect()
     
-    disk_cache=DiskCacheKVStore(Cache(directory=DISK_CACHE_DIR)).using_serializer(dill)
-    treeui=TreeNodeUI(app,disk_cache)
+    disk_cache=Cache(directory=DISK_CACHE_DIR)
+    kvstore=DiskCacheKVStore(disk_cache).using_serializer(dill)
+    treeui=TreeNodeUI(app,kvstore)
     
     yield app,treeui
     
+    disk_cache.close()
     handler.disconnect()
     
     
