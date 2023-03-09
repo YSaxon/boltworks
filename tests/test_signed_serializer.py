@@ -20,7 +20,7 @@ def test_deserialize_invalid_signature():
     signed_serializer = SignedSerializer(pickle, symmetric_key)
     signed_data = signed_serializer.dumps(data)
     # modify the signed data to make the signature invalid
-    modified_signed_data = signed_data[:-1] + b"0"
+    modified_signed_data = signed_data[:-1] + bytes(signed_data[-1] ^ 0xFF)
     with pytest.raises(itsdangerous.BadSignature):
         signed_serializer.loads(modified_signed_data)
 
