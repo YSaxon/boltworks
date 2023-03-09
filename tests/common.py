@@ -18,6 +18,7 @@ def _find_test_creds():
     token = os.getenv('TOKEN')
     apptoken = os.getenv('APPTOKEN')
     channel = os.getenv('CHANNEL')
+    webhook_url=os.getenv('WEBHOOK_URL')
     
     if not all((token, apptoken, channel)):
         # Try loading from .creds file
@@ -32,10 +33,11 @@ def _find_test_creds():
         if not token: token = creds_dict['token']
         if not apptoken: apptoken = creds_dict['apptoken']
         if not channel: channel = creds_dict['channel']
+        if not webhook_url: webhook_url = creds_dict['webhook_url']
             
-    return token, apptoken, channel
+    return token, apptoken, channel, webhook_url
 
-TOKEN,APPTOKEN,TEST_CHANNEL=_find_test_creds()
+TOKEN,APPTOKEN,TEST_CHANNEL,WEBHOOK_URL=_find_test_creds()
 DISK_CACHE_DIR=tempfile.mkdtemp()
 
 
