@@ -52,6 +52,7 @@ slack-sdk = "^3.20.0"
 dill = "^0.3.6"
 itsdangerous = "^2.1.2"
 diskcache = "^5.4.0"
+pyyaml = "^6.0"
 
 [tool.poetry.extras]
 test = [

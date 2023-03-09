@@ -13,6 +13,7 @@ from slack_sdk.web import SlackResponse
 
 
 import os
+import yaml
 
 def _find_test_creds():
     token = os.getenv('TOKEN')
@@ -23,19 +24,14 @@ def _find_test_creds():
     if not all((token, apptoken, channel)):
         # Try loading from .creds file
         with open('tests/.creds.yml', 'r') as f:
-            creds = f.read().strip().splitlines()
+            creds = yaml.safe_load(f)
         
-        creds_dict = {}
-        for line in creds:
-            key, value = line.split(':')
-            creds_dict[key.strip()] = value.strip()
-        
-        if not token: token = creds_dict['token']
-        if not apptoken: apptoken = creds_dict['apptoken']
-        if not channel: channel = creds_dict['channel']
-        if not webhook_url: webhook_url = creds_dict['webhook_url']
-            
-    return token, apptoken, channel, webhook_url
+        token = creds['token']
+        apptoken = creds['apptoken']
+        channel = creds['channel']
+        webhook_url = creds['webhook_url']
+    
+    return token, apptoken, channel
 
 TOKEN,APPTOKEN,TEST_CHANNEL,WEBHOOK_URL=_find_test_creds()
 DISK_CACHE_DIR=tempfile.mkdtemp()
