@@ -14,7 +14,7 @@ from slack_sdk.models.blocks import (ActionsBlock, Block, ButtonElement,
                                      SectionBlock, StaticSelectElement)
 from slack_sdk.models.blocks.block_elements import MarkdownTextObject, Option
 from slack_sdk.webhook import WebhookResponse
-from ..gui.expandpointer import ExpandPointer
+from ..gui.expandpointer import _ExpandPointer
 from ..helper.kvstore import KVStore
 from ..helper.slack_utils import simple_slack_block
 
@@ -123,7 +123,7 @@ class TreeNodeUI:
         #     print(self.profiler.output_text(unicode=True, color=True))
 
     @staticmethod
-    def _button_to_replace_block(button_text:str,rootkey:str,expandpointer:ExpandPointer,**format_options):
+    def _button_to_replace_block(button_text:str,rootkey:str,expandpointer:_ExpandPointer,**format_options):
         serialized_data=TreeNodeUI._serialize_callback(rootkey,expandpointer)
         button=ButtonElement(
             text=button_text,
@@ -133,29 +133,29 @@ class TreeNodeUI:
         return button
 
     @staticmethod
-    def _serialize_callback(rootkey:str,expandpointer:ExpandPointer)->str:
+    def _serialize_callback(rootkey:str,expandpointer:_ExpandPointer)->str:
         serialized_pointer=','.join([str(v) for v in expandpointer])
         return f"{prefix_for_callback}{rootkey}^{serialized_pointer}"
 
     @staticmethod
-    def _deserialize_callback(data:str)->Tuple[str,ExpandPointer]:
+    def _deserialize_callback(data:str)->Tuple[str,_ExpandPointer]:
         rootkey,serialized_pointer=data.rsplit('^', 1)
         pointerelems=serialized_pointer.split(',')
-        expandpointer=ExpandPointer([int(p) for p in pointerelems])
+        expandpointer=_ExpandPointer([int(p) for p in pointerelems])
         return rootkey,expandpointer
 
-    def _format_tree(self,rootkey:str,*,expandpointer:ExpandPointer=ExpandPointer([0]),expand_first=False):
+    def _format_tree(self,rootkey:str,*,expandpointer:_ExpandPointer=_ExpandPointer([0]),expand_first=False):
         root=self._get_root(rootkey)
         if expand_first and root.children_containers:
             if isinstance(root.children_containers[0],ChildNodeContainer):
-                expandpointer=ExpandPointer([0,0,0])
+                expandpointer=_ExpandPointer([0,0,0])
             elif isinstance(root.children_containers[0],ChildNodeMenuContainer):
-                expandpointer=ExpandPointer([0,0,0,0])
+                expandpointer=_ExpandPointer([0,0,0,0])
         diminish_pageination_by=0
         blocks_to_return =  self._format_tree_recursive(
                         parentnodes=[root],
                         expandpointer=expandpointer,
-                        ancestral_pointer=ExpandPointer([]),
+                        ancestral_pointer=_ExpandPointer([]),
                         rootkey=rootkey,
                         parents_pagination=1,
                         diminish_pageination_by=0
@@ -166,7 +166,7 @@ class TreeNodeUI:
                 blocks_to_return =  self._format_tree_recursive(
                             parentnodes=[root],
                             expandpointer=expandpointer,
-                            ancestral_pointer=ExpandPointer([]),
+                            ancestral_pointer=_ExpandPointer([]),
                             rootkey=rootkey,
                             parents_pagination=1,
                             diminish_pageination_by=diminish_pageination_by
@@ -176,8 +176,8 @@ class TreeNodeUI:
 
     def _format_tree_recursive(self,
                     parentnodes:list[TreeNode],
-                    expandpointer:ExpandPointer,#:list[int], #could just make last one the start_at pointer and only go deeper if theres more
-                    ancestral_pointer:ExpandPointer,
+                    expandpointer:_ExpandPointer,#:list[int], #could just make last one the start_at pointer and only go deeper if theres more
+                    ancestral_pointer:_ExpandPointer,
                     rootkey:str,
                     parents_pagination:int=10,
                     diminish_pageination_by=0 #in case we exceed block limits, we can retry with some number here to recursively diminish the pageination
@@ -196,9 +196,9 @@ class TreeNodeUI:
                     new_parent=parentnodes[child_insert]
                     children_containers=new_parent.children_containers
                     if remaining_expandpointer[0] > len(new_parent.children_containers):    #transitional
-                        remaining_expandpointer=ExpandPointer([0,0])
+                        remaining_expandpointer=_ExpandPointer([0,0])
                     if len(remaining_expandpointer)==1:                                     #transitional
-                        remaining_expandpointer=ExpandPointer([0]).extend(remaining_expandpointer)
+                        remaining_expandpointer=_ExpandPointer([0]).extend(remaining_expandpointer)
                     container_opened_index=remaining_expandpointer[0]
                     selected_container=children_containers[container_opened_index]
                     if isinstance(selected_container,ChildNodeContainer):
@@ -234,9 +234,9 @@ class TreeNodeUI:
 
     def _formatblock(self,
                     node:TreeNode,
-                pointer_to_block:ExpandPointer,
+                pointer_to_block:_ExpandPointer,
                 rootkey:str,
-                remaining_expandpointer:ExpandPointer=None):
+                remaining_expandpointer:_ExpandPointer=None):
         blocks:list[Block]=[]
         if isinstance(node.formatblocks,list):
             blocks.extend(node.formatblocks)
@@ -264,7 +264,7 @@ class TreeNodeUI:
 
         return blocks
 
-    def _make_prev_next_buttons(self,usePrev:bool,useNext:bool,prev_callback:Tuple[str,ExpandPointer],next_callback:Tuple[str,ExpandPointer])->Optional[ActionsBlock]:
+    def _make_prev_next_buttons(self,usePrev:bool,useNext:bool,prev_callback:Tuple[str,_ExpandPointer],next_callback:Tuple[str,_ExpandPointer])->Optional[ActionsBlock]:
         if (not usePrev) and (not useNext): return None
         buttons=[]
         if(usePrev): buttons.append(self._button_to_replace_block(":arrow_left:",*prev_callback))
@@ -350,12 +350,12 @@ class TreeNode:
 class ChildNodeContainer:
     child_nodes:list[TreeNode]
     child_pageination:int=10
-    def format_container(self,rootkey:str,pointer_to_container:ExpandPointer,child_already_selected:int=-1)->InteractiveElement:...
+    def format_container(self,rootkey:str,pointer_to_container:_ExpandPointer,child_already_selected:int=-1)->InteractiveElement:...
 
 class ChildNodeMenuContainer:
     child_nodes:list[list[TreeNode]]
     child_pageination:int=10
-    def format_container(self,rootkey:str,pointer_to_container:ExpandPointer,child_already_selected:int=-1,)->InteractiveElement:...
+    def format_container(self,rootkey:str,pointer_to_container:_ExpandPointer,child_already_selected:int=-1,)->InteractiveElement:...
 
 
 class ButtonChildContainer(ChildNodeContainer):
@@ -369,7 +369,7 @@ class ButtonChildContainer(ChildNodeContainer):
         self.expand_button_format_string=expand_button_format_string if not static_button_text else static_button_text
         self.collapse_button_format_string = collapse_button_format_string if not static_button_text else static_button_text
         self.child_pageination=child_pageination
-    def format_container(self, rootkey:str,pointer_to_container:ExpandPointer, child_already_selected:int=-1) -> InteractiveElement:
+    def format_container(self, rootkey:str,pointer_to_container:_ExpandPointer, child_already_selected:int=-1) -> InteractiveElement:
         if child_already_selected == -1:#if not already selected then it should be an expand button
             return TreeNodeUI._button_to_replace_block(rootkey=rootkey,
                                                        expandpointer=pointer_to_container.append(0) #appending 0 to point to first node contained within this button
@@ -403,7 +403,7 @@ class StaticSelectMenuChildContainer(ChildNodeMenuContainer):
         self.placeholder=placeholder
         self.options_for_menu=[Option(value=str(i),label=labels[i]) for i in range(len(labels))]
         self.child_pageination=child_pageination
-    def format_container(self, rootkey:str,pointer_to_container:ExpandPointer, child_already_selected:int=-1) -> InteractiveElement:
+    def format_container(self, rootkey:str,pointer_to_container:_ExpandPointer, child_already_selected:int=-1) -> InteractiveElement:
         if child_already_selected == -1: #not already selected
             return StaticSelectElement(placeholder=self.placeholder or "",action_id=TreeNodeUI._serialize_callback(rootkey,pointer_to_container),
                                  options=self.options_for_menu)
@@ -418,7 +418,7 @@ class OverflowMenuChildContainer(ChildNodeMenuContainer):
         self.child_nodes=list(i.nodes for i in menu_options_and_associated_nodes)
         self.options_for_menu=[Option(value=str(i),label=labels[i]) for i in range(len(labels))]
         self.child_pageination=child_pageination
-    def format_container(self, rootkey:str,pointer_to_container:ExpandPointer, child_already_selected:int=-1) -> InteractiveElement:
+    def format_container(self, rootkey:str,pointer_to_container:_ExpandPointer, child_already_selected:int=-1) -> InteractiveElement:
         if child_already_selected == -1: #not already selected
             return OverflowMenuElement(action_id=TreeNodeUI._serialize_callback(rootkey,pointer_to_container),options=self.options_for_menu)
         else: #one of the options already selected
@@ -434,7 +434,7 @@ class RadioButtonChildContainer(ChildNodeMenuContainer):
         self.child_nodes=list(i.nodes for i in menu_options_and_associated_nodes)
         self.options_for_menu=[Option(value=str(i),label=labels[i]) for i in range(len(labels))]
         self.child_pageination=child_pageination
-    def format_container(self, rootkey:str,pointer_to_container:ExpandPointer, child_already_selected:int=-1) -> InteractiveElement:
+    def format_container(self, rootkey:str,pointer_to_container:_ExpandPointer, child_already_selected:int=-1) -> InteractiveElement:
         if child_already_selected == -1: #not already selected
             return RadioButtonsElement(action_id=TreeNodeUI._serialize_callback(rootkey,pointer_to_container),options=self.options_for_menu)
         else: #one of the options already selected
