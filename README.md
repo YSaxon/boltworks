@@ -2,7 +2,11 @@
 
 A collection of various extensions for Slack's bolt library to help you more easily make better slackbots.
 
+[docs](https://ysaxon.github.io/boltworks/)
+
 ## CLI - Argparse decorator
+
+[argparse_command in docs](https://ysaxon.github.io/boltworks/api/#boltworks.cli.argparse_decorator)
 
 This allows you to use Python's argparse library to process complex command line flags and options in Slack Commands.
 
@@ -56,6 +60,8 @@ def perform_the_magic(args: Args, main_input: str, quiet:Optional[bool]=False, n
 
 ## GUI - ActionCallbacks
 
+[ActionCallbacks in docs](https://ysaxon.github.io/boltworks/api/#boltworks.cli.argparse_decorator)
+
 This class allows you to easily serialize a method as a callback for a Slack UI element such as a button.
 These callbacks can themselves post UI elements with more callbacks for more complicated logic, and you can always use the `partial` class to inject some arguments into the callback method at the time you are creating the callback, as in the below example.  
 
@@ -96,6 +102,8 @@ app.client.chat_postMessage(blocks=[timer_start_block],channel=CHANNEL_ID)
 Similiar to ActionCallbacks, this class allows you to register a message's `ts` (timestamp used by slack as a message id), so that your callback will be called any time a message is posted to that Thread.
 
 ## GUI - NodeTreeUI
+
+[TreeNodeUI class in docs](https://ysaxon.github.io/boltworks/api/#boltworks.gui.treenodeui.TreeNodeUI)
 
 This is the beefiest module of the repo. It allows you to display complex nested information neatly, in a user-clickable, expanding and contracting view.
 The TreeNodeUI class handles all the logic of formatting these trees and responding to clicks.
