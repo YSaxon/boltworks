@@ -4,6 +4,11 @@ A collection of various extensions for Slack's bolt library to help you more eas
 
 [docs](https://ysaxon.github.io/boltworks/)
 
+The main features are:
+* Easy CLI parsing using the ArgParse library (or an automagic function parser that determines what params you need)
+* Easy callbacks on buttons and other GUI elements
+* A fast and flexible way of posting lots of information in a dynamically expandable GUI format
+
 ## CLI - Argparse decorator
 
 [argparse_command in docs](https://ysaxon.github.io/boltworks/api/#boltworks.cli.argparse_decorator)
