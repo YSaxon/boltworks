@@ -72,10 +72,10 @@ These callbacks can themselves post UI elements with more callbacks for more com
 
 ```
 DISK_CACHE_DIR="~/.diskcache"
-from boltworks import ActionCallbacks,DiskCacheKVSTore
+from boltworks import ActionCallbacks,DiskCacheKVStore
 from diskcache import Cache #pip install diskcache
 
-disk_cache=DiskCacheKVSTore(Cache(directory=DISK_CACHE_DIR))
+disk_cache=DiskCacheKVStore(Cache(directory=DISK_CACHE_DIR))
 callbacks=ActionCallbacks(app,disk_cache.using_serializer(dill))
 
 def get_elapsed_time(args:Args, start:datetime):

@@ -96,7 +96,7 @@ def all_kvstore_simple_tests(kvstore):
     test_context_mgr(kvstore)
     
 # def test_disk_cache_kvstore(disk_cache):
-#     store = DiskCacheKVSTore(disk_cache)
+#     store = DiskCacheKVStore(disk_cache)
 #     t_all_kvstore(store)
 
 def test_overdecorated_kvstore(disk_cache):
