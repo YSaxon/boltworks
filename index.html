@@ -13,7 +13,7 @@
     
     
       
-        <title>Slack Bolt UI Extensions</title>
+        <title>Boltworks</title>
       
     
     
@@ -84,7 +84,7 @@
 
 <header class="md-header md-header--lifted" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="." title="Slack Bolt UI Extensions" class="md-header__button md-logo" aria-label="Slack Bolt UI Extensions" data-md-component="logo">
+    <a href="." title="Boltworks" class="md-header__button md-logo" aria-label="Boltworks" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
@@ -97,7 +97,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            Slack Bolt UI Extensions
+            Boltworks
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -303,13 +303,13 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="Slack Bolt UI Extensions" class="md-nav__button md-logo" aria-label="Slack Bolt UI Extensions" data-md-component="logo">
+    <a href="." title="Boltworks" class="md-nav__button md-logo" aria-label="Boltworks" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
 
     </a>
-    Slack Bolt UI Extensions
+    Boltworks
   </label>
   
     <div class="md-nav__source">
@@ -576,7 +576,13 @@
 <!-- BEGIN INCLUDE ../README.md -->
 <h2 id="boltworks">Boltworks<a class="headerlink" href="#boltworks" title="Permanent link">&para;</a></h2>
 <p>A collection of various extensions for Slack's bolt library to help you more easily make better slackbots.</p>
+<p><a href="https://ysaxon.github.io/boltworks/">docs</a></p>
+<p>The main features are:
+* Easy CLI parsing using the ArgParse library (or an automagic function parser that determines what params you need)
+* Easy callbacks on buttons and other GUI elements
+* A fast and flexible way of posting lots of information in a dynamically expandable GUI format</p>
 <h3 id="cli---argparse-decorator">CLI - Argparse decorator<a class="headerlink" href="#cli---argparse-decorator" title="Permanent link">&para;</a></h3>
+<p><a href="https://ysaxon.github.io/boltworks/api/#boltworks.cli.argparse_decorator">argparse_command in docs</a></p>
 <p>This allows you to use Python's argparse library to process complex command line flags and options in Slack Commands.</p>
 <p>All Slack parameters will be passed through to your method; you can use the 'args' catchall, and/or individual arguments like 'respond' or 'context' etc
 All other parameters will be parsed from the command string when the command is run.</p>
@@ -650,7 +656,11 @@ def perform_the_magic(args: Args, main_input: str, quiet:Optional[bool]=False, n
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span>
 <span class="normal">3</span>
-<span class="normal">4</span></pre></div></td><td class="code"><div><pre><span></span><code>## GUI - ActionCallbacks
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span></pre></div></td><td class="code"><div><pre><span></span><code>## GUI - ActionCallbacks
+
+[ActionCallbacks in docs](https://ysaxon.github.io/boltworks/api/#boltworks.cli.argparse_decorator)
 
 This class allows you to easily serialize a method as a callback for a Slack UI element such as a button.
 These callbacks can themselves post UI elements with more callbacks for more complicated logic, and you can always use the `partial` class to inject some arguments into the callback method at the time you are creating the callback, as in the below example.  
@@ -707,11 +717,15 @@ app.client.chat_postMessage(blocks=[timer_start_block],channel=CHANNEL_ID)
 <span class="normal">25</span>
 <span class="normal">26</span>
 <span class="normal">27</span>
-<span class="normal">28</span></pre></div></td><td class="code"><div><pre><span></span><code>## GUI - ThreadCallbacks
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span></pre></div></td><td class="code"><div><pre><span></span><code>## GUI - ThreadCallbacks
 
 Similiar to ActionCallbacks, this class allows you to register a message&#39;s `ts` (timestamp used by slack as a message id), so that your callback will be called any time a message is posted to that Thread.
 
 ## GUI - NodeTreeUI
+
+[TreeNodeUI class in docs](https://ysaxon.github.io/boltworks/api/#boltworks.gui.treenodeui.TreeNodeUI)
 
 This is the beefiest module of the repo. It allows you to display complex nested information neatly, in a user-clickable, expanding and contracting view.
 The TreeNodeUI class handles all the logic of formatting these trees and responding to clicks.

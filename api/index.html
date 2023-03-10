@@ -13,7 +13,7 @@
     
     
       
-        <title>modules - Slack Bolt UI Extensions</title>
+        <title>modules - Boltworks</title>
       
     
     
@@ -84,7 +84,7 @@
 
 <header class="md-header md-header--lifted" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href=".." title="Slack Bolt UI Extensions" class="md-header__button md-logo" aria-label="Slack Bolt UI Extensions" data-md-component="logo">
+    <a href=".." title="Boltworks" class="md-header__button md-logo" aria-label="Boltworks" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
@@ -97,7 +97,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            Slack Bolt UI Extensions
+            Boltworks
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -303,13 +303,13 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href=".." title="Slack Bolt UI Extensions" class="md-nav__button md-logo" aria-label="Slack Bolt UI Extensions" data-md-component="logo">
+    <a href=".." title="Boltworks" class="md-nav__button md-logo" aria-label="Boltworks" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
 
     </a>
-    Slack Bolt UI Extensions
+    Boltworks
   </label>
   
     <div class="md-nav__source">
@@ -462,26 +462,6 @@
   
     <nav class="md-nav" aria-label="gui">
       <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#boltworks.gui.expandpointer" class="md-nav__link">
-    expandpointer
-  </a>
-  
-    <nav class="md-nav" aria-label="expandpointer">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#boltworks.gui.expandpointer.ExpandPointer" class="md-nav__link">
-    ExpandPointer
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
         
           <li class="md-nav__item">
   <a href="#boltworks.gui.treenodeui" class="md-nav__link">
@@ -755,26 +735,6 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#boltworks.gui.expandpointer" class="md-nav__link">
-    expandpointer
-  </a>
-  
-    <nav class="md-nav" aria-label="expandpointer">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#boltworks.gui.expandpointer.ExpandPointer" class="md-nav__link">
-    ExpandPointer
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#boltworks.gui.treenodeui" class="md-nav__link">
     treenodeui
   </a>
@@ -940,7 +900,7 @@
 <a id="boltworks"></a>
     <div class="doc doc-contents first">
 
-      <p>Top-level package for Slack Bolt UI Extensions.</p>
+      <p>Top-level package for Boltworks.</p>
 
 
 
@@ -1339,129 +1299,6 @@ It's recommended when you configure the Command in Slack to configure the usage 
 
 
 
-  <div class="doc doc-object doc-module">
-
-
-
-<h3 id="boltworks.gui.expandpointer" class="doc doc-heading">
-        <code>expandpointer</code>
-
-
-
-<a href="#boltworks.gui.expandpointer" class="headerlink" title="Permanent link">&para;</a></h3>
-
-    <div class="doc doc-contents ">
-
-
-
-
-  <div class="doc doc-children">
-
-
-
-
-
-
-
-  <div class="doc doc-object doc-class">
-
-
-
-<h4 id="boltworks.gui.expandpointer.ExpandPointer" class="doc doc-heading">
-        <code>
-ExpandPointer        </code>
-
-
-
-<a href="#boltworks.gui.expandpointer.ExpandPointer" class="headerlink" title="Permanent link">&para;</a></h4>
-
-    <div class="doc doc-contents ">
-
-      <p>An ExpandPointer is a series of indexes into a Node Tree which recursively indicates which nodes to expand.
-This class is just a wrapper around Tuple. It exists as a seperate class mostly to avoid the somewhat more confusing tuple syntax for tuple literals.</p>
-
-        <details class="quote">
-          <summary>Source code in <code>boltworks/gui/expandpointer.py</code></summary>
-          <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">ExpandPointer</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    An ExpandPointer is a series of indexes into a Node Tree which recursively indicates which nodes to expand.</span>
-<span class="sd">    This class is just a wrapper around Tuple. It exists as a seperate class mostly to avoid the somewhat more confusing tuple syntax for tuple literals.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">values</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_values</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span><span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
-    <span class="nd">@overload</span>
-    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span> <span class="o">...</span>
-    <span class="nd">@overload</span>
-    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">slice</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ExpandPointer</span><span class="p">:</span> <span class="o">...</span>
-    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">slice</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">ExpandPointer</span><span class="p">]:</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_values</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
-        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="nb">slice</span><span class="p">):</span>
-            <span class="k">return</span> <span class="n">ExpandPointer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_values</span><span class="p">[</span><span class="n">index</span><span class="p">])</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Index must be an int or slice&#39;</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_values</span><span class="o">.</span><span class="fm">__hash__</span><span class="p">()</span>
-    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_values</span><span class="o">.</span><span class="fm">__len__</span><span class="p">()</span>
-    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_values</span><span class="o">.</span><span class="fm">__iter__</span><span class="p">()</span>
-
-    <span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ExpandPointer</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">ExpandPointer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_values</span> <span class="o">+</span> <span class="p">(</span><span class="n">val</span><span class="p">,))</span>
-
-    <span class="k">def</span> <span class="nf">extend</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">ExpandPointer</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">ExpandPointer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_values</span> <span class="o">+</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">obj</span><span class="p">))</span>
-
-    <span class="k">def</span> <span class="nf">__getstate__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_values</span>
-    <span class="k">def</span> <span class="nf">__setstate__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_values</span> <span class="o">=</span> <span class="n">state</span>
-</code></pre></div>
-        </details>
-
-
-
-  <div class="doc doc-children">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  </div>
-
-    </div>
-
-  </div>
-
-
-
-
-
-
-
-  </div>
-
-    </div>
-
-  </div>
-
-
 
   <div class="doc doc-object doc-module">
 
@@ -1539,7 +1376,7 @@ ButtonChildContainer            (<span title="boltworks.gui.treenodeui.ChildNode
         <span class="bp">self</span><span class="o">.</span><span class="n">expand_button_format_string</span><span class="o">=</span><span class="n">expand_button_format_string</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">static_button_text</span> <span class="k">else</span> <span class="n">static_button_text</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">collapse_button_format_string</span> <span class="o">=</span> <span class="n">collapse_button_format_string</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">static_button_text</span> <span class="k">else</span> <span class="n">static_button_text</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">child_pageination</span><span class="o">=</span><span class="n">child_pageination</span>
-    <span class="k">def</span> <span class="nf">format_container</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rootkey</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span><span class="n">pointer_to_container</span><span class="p">:</span><span class="n">ExpandPointer</span><span class="p">,</span> <span class="n">child_already_selected</span><span class="p">:</span><span class="nb">int</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">InteractiveElement</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">format_container</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rootkey</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span><span class="n">pointer_to_container</span><span class="p">:</span><span class="n">_ExpandPointer</span><span class="p">,</span> <span class="n">child_already_selected</span><span class="p">:</span><span class="nb">int</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">InteractiveElement</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">child_already_selected</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="c1">#if not already selected then it should be an expand button</span>
             <span class="k">return</span> <span class="n">TreeNodeUI</span><span class="o">.</span><span class="n">_button_to_replace_block</span><span class="p">(</span><span class="n">rootkey</span><span class="o">=</span><span class="n">rootkey</span><span class="p">,</span>
                                                        <span class="n">expandpointer</span><span class="o">=</span><span class="n">pointer_to_container</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="c1">#appending 0 to point to first node contained within this button</span>
@@ -1997,7 +1834,7 @@ TreeNodeUI        </code>
         <span class="c1">#     print(self.profiler.output_text(unicode=True, color=True))</span>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_button_to_replace_block</span><span class="p">(</span><span class="n">button_text</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span><span class="n">rootkey</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span><span class="n">expandpointer</span><span class="p">:</span><span class="n">ExpandPointer</span><span class="p">,</span><span class="o">**</span><span class="n">format_options</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_button_to_replace_block</span><span class="p">(</span><span class="n">button_text</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span><span class="n">rootkey</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span><span class="n">expandpointer</span><span class="p">:</span><span class="n">_ExpandPointer</span><span class="p">,</span><span class="o">**</span><span class="n">format_options</span><span class="p">):</span>
         <span class="n">serialized_data</span><span class="o">=</span><span class="n">TreeNodeUI</span><span class="o">.</span><span class="n">_serialize_callback</span><span class="p">(</span><span class="n">rootkey</span><span class="p">,</span><span class="n">expandpointer</span><span class="p">)</span>
         <span class="n">button</span><span class="o">=</span><span class="n">ButtonElement</span><span class="p">(</span>
             <span class="n">text</span><span class="o">=</span><span class="n">button_text</span><span class="p">,</span>
@@ -2007,29 +1844,29 @@ TreeNodeUI        </code>
         <span class="k">return</span> <span class="n">button</span>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_serialize_callback</span><span class="p">(</span><span class="n">rootkey</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span><span class="n">expandpointer</span><span class="p">:</span><span class="n">ExpandPointer</span><span class="p">)</span><span class="o">-&gt;</span><span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">_serialize_callback</span><span class="p">(</span><span class="n">rootkey</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span><span class="n">expandpointer</span><span class="p">:</span><span class="n">_ExpandPointer</span><span class="p">)</span><span class="o">-&gt;</span><span class="nb">str</span><span class="p">:</span>
         <span class="n">serialized_pointer</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">expandpointer</span><span class="p">])</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prefix_for_callback</span><span class="si">}{</span><span class="n">rootkey</span><span class="si">}</span><span class="s2">^</span><span class="si">{</span><span class="n">serialized_pointer</span><span class="si">}</span><span class="s2">&quot;</span>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_deserialize_callback</span><span class="p">(</span><span class="n">data</span><span class="p">:</span><span class="nb">str</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span><span class="n">ExpandPointer</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">_deserialize_callback</span><span class="p">(</span><span class="n">data</span><span class="p">:</span><span class="nb">str</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span><span class="n">_ExpandPointer</span><span class="p">]:</span>
         <span class="n">rootkey</span><span class="p">,</span><span class="n">serialized_pointer</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">&#39;^&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="n">pointerelems</span><span class="o">=</span><span class="n">serialized_pointer</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
-        <span class="n">expandpointer</span><span class="o">=</span><span class="n">ExpandPointer</span><span class="p">([</span><span class="nb">int</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">pointerelems</span><span class="p">])</span>
+        <span class="n">expandpointer</span><span class="o">=</span><span class="n">_ExpandPointer</span><span class="p">([</span><span class="nb">int</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">pointerelems</span><span class="p">])</span>
         <span class="k">return</span> <span class="n">rootkey</span><span class="p">,</span><span class="n">expandpointer</span>
 
-    <span class="k">def</span> <span class="nf">_format_tree</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">rootkey</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span><span class="o">*</span><span class="p">,</span><span class="n">expandpointer</span><span class="p">:</span><span class="n">ExpandPointer</span><span class="o">=</span><span class="n">ExpandPointer</span><span class="p">([</span><span class="mi">0</span><span class="p">]),</span><span class="n">expand_first</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_format_tree</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">rootkey</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span><span class="o">*</span><span class="p">,</span><span class="n">expandpointer</span><span class="p">:</span><span class="n">_ExpandPointer</span><span class="o">=</span><span class="n">_ExpandPointer</span><span class="p">([</span><span class="mi">0</span><span class="p">]),</span><span class="n">expand_first</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="n">root</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_root</span><span class="p">(</span><span class="n">rootkey</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">expand_first</span> <span class="ow">and</span> <span class="n">root</span><span class="o">.</span><span class="n">children_containers</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">children_containers</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">ChildNodeContainer</span><span class="p">):</span>
-                <span class="n">expandpointer</span><span class="o">=</span><span class="n">ExpandPointer</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+                <span class="n">expandpointer</span><span class="o">=</span><span class="n">_ExpandPointer</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
             <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">children_containers</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">ChildNodeMenuContainer</span><span class="p">):</span>
-                <span class="n">expandpointer</span><span class="o">=</span><span class="n">ExpandPointer</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+                <span class="n">expandpointer</span><span class="o">=</span><span class="n">_ExpandPointer</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
         <span class="n">diminish_pageination_by</span><span class="o">=</span><span class="mi">0</span>
         <span class="n">blocks_to_return</span> <span class="o">=</span>  <span class="bp">self</span><span class="o">.</span><span class="n">_format_tree_recursive</span><span class="p">(</span>
                         <span class="n">parentnodes</span><span class="o">=</span><span class="p">[</span><span class="n">root</span><span class="p">],</span>
                         <span class="n">expandpointer</span><span class="o">=</span><span class="n">expandpointer</span><span class="p">,</span>
-                        <span class="n">ancestral_pointer</span><span class="o">=</span><span class="n">ExpandPointer</span><span class="p">([]),</span>
+                        <span class="n">ancestral_pointer</span><span class="o">=</span><span class="n">_ExpandPointer</span><span class="p">([]),</span>
                         <span class="n">rootkey</span><span class="o">=</span><span class="n">rootkey</span><span class="p">,</span>
                         <span class="n">parents_pagination</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
                         <span class="n">diminish_pageination_by</span><span class="o">=</span><span class="mi">0</span>
@@ -2040,7 +1877,7 @@ TreeNodeUI        </code>
                 <span class="n">blocks_to_return</span> <span class="o">=</span>  <span class="bp">self</span><span class="o">.</span><span class="n">_format_tree_recursive</span><span class="p">(</span>
                             <span class="n">parentnodes</span><span class="o">=</span><span class="p">[</span><span class="n">root</span><span class="p">],</span>
                             <span class="n">expandpointer</span><span class="o">=</span><span class="n">expandpointer</span><span class="p">,</span>
-                            <span class="n">ancestral_pointer</span><span class="o">=</span><span class="n">ExpandPointer</span><span class="p">([]),</span>
+                            <span class="n">ancestral_pointer</span><span class="o">=</span><span class="n">_ExpandPointer</span><span class="p">([]),</span>
                             <span class="n">rootkey</span><span class="o">=</span><span class="n">rootkey</span><span class="p">,</span>
                             <span class="n">parents_pagination</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
                             <span class="n">diminish_pageination_by</span><span class="o">=</span><span class="n">diminish_pageination_by</span>
@@ -2050,8 +1887,8 @@ TreeNodeUI        </code>
 
     <span class="k">def</span> <span class="nf">_format_tree_recursive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                     <span class="n">parentnodes</span><span class="p">:</span><span class="nb">list</span><span class="p">[</span><span class="n">TreeNode</span><span class="p">],</span>
-                    <span class="n">expandpointer</span><span class="p">:</span><span class="n">ExpandPointer</span><span class="p">,</span><span class="c1">#:list[int], #could just make last one the start_at pointer and only go deeper if theres more</span>
-                    <span class="n">ancestral_pointer</span><span class="p">:</span><span class="n">ExpandPointer</span><span class="p">,</span>
+                    <span class="n">expandpointer</span><span class="p">:</span><span class="n">_ExpandPointer</span><span class="p">,</span><span class="c1">#:list[int], #could just make last one the start_at pointer and only go deeper if theres more</span>
+                    <span class="n">ancestral_pointer</span><span class="p">:</span><span class="n">_ExpandPointer</span><span class="p">,</span>
                     <span class="n">rootkey</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span>
                     <span class="n">parents_pagination</span><span class="p">:</span><span class="nb">int</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
                     <span class="n">diminish_pageination_by</span><span class="o">=</span><span class="mi">0</span> <span class="c1">#in case we exceed block limits, we can retry with some number here to recursively diminish the pageination</span>
@@ -2070,9 +1907,9 @@ TreeNodeUI        </code>
                     <span class="n">new_parent</span><span class="o">=</span><span class="n">parentnodes</span><span class="p">[</span><span class="n">child_insert</span><span class="p">]</span>
                     <span class="n">children_containers</span><span class="o">=</span><span class="n">new_parent</span><span class="o">.</span><span class="n">children_containers</span>
                     <span class="k">if</span> <span class="n">remaining_expandpointer</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_parent</span><span class="o">.</span><span class="n">children_containers</span><span class="p">):</span>    <span class="c1">#transitional</span>
-                        <span class="n">remaining_expandpointer</span><span class="o">=</span><span class="n">ExpandPointer</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+                        <span class="n">remaining_expandpointer</span><span class="o">=</span><span class="n">_ExpandPointer</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
                     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">remaining_expandpointer</span><span class="p">)</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span>                                     <span class="c1">#transitional</span>
-                        <span class="n">remaining_expandpointer</span><span class="o">=</span><span class="n">ExpandPointer</span><span class="p">([</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">remaining_expandpointer</span><span class="p">)</span>
+                        <span class="n">remaining_expandpointer</span><span class="o">=</span><span class="n">_ExpandPointer</span><span class="p">([</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">remaining_expandpointer</span><span class="p">)</span>
                     <span class="n">container_opened_index</span><span class="o">=</span><span class="n">remaining_expandpointer</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
                     <span class="n">selected_container</span><span class="o">=</span><span class="n">children_containers</span><span class="p">[</span><span class="n">container_opened_index</span><span class="p">]</span>
                     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">selected_container</span><span class="p">,</span><span class="n">ChildNodeContainer</span><span class="p">):</span>
@@ -2108,9 +1945,9 @@ TreeNodeUI        </code>
 
     <span class="k">def</span> <span class="nf">_formatblock</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                     <span class="n">node</span><span class="p">:</span><span class="n">TreeNode</span><span class="p">,</span>
-                <span class="n">pointer_to_block</span><span class="p">:</span><span class="n">ExpandPointer</span><span class="p">,</span>
+                <span class="n">pointer_to_block</span><span class="p">:</span><span class="n">_ExpandPointer</span><span class="p">,</span>
                 <span class="n">rootkey</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span>
-                <span class="n">remaining_expandpointer</span><span class="p">:</span><span class="n">ExpandPointer</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+                <span class="n">remaining_expandpointer</span><span class="p">:</span><span class="n">_ExpandPointer</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">blocks</span><span class="p">:</span><span class="nb">list</span><span class="p">[</span><span class="n">Block</span><span class="p">]</span><span class="o">=</span><span class="p">[]</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">formatblocks</span><span class="p">,</span><span class="nb">list</span><span class="p">):</span>
             <span class="n">blocks</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">formatblocks</span><span class="p">)</span>
@@ -2138,7 +1975,7 @@ TreeNodeUI        </code>
 
         <span class="k">return</span> <span class="n">blocks</span>
 
-    <span class="k">def</span> <span class="nf">_make_prev_next_buttons</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">usePrev</span><span class="p">:</span><span class="nb">bool</span><span class="p">,</span><span class="n">useNext</span><span class="p">:</span><span class="nb">bool</span><span class="p">,</span><span class="n">prev_callback</span><span class="p">:</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span><span class="n">ExpandPointer</span><span class="p">],</span><span class="n">next_callback</span><span class="p">:</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span><span class="n">ExpandPointer</span><span class="p">])</span><span class="o">-&gt;</span><span class="n">Optional</span><span class="p">[</span><span class="n">ActionsBlock</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">_make_prev_next_buttons</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">usePrev</span><span class="p">:</span><span class="nb">bool</span><span class="p">,</span><span class="n">useNext</span><span class="p">:</span><span class="nb">bool</span><span class="p">,</span><span class="n">prev_callback</span><span class="p">:</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span><span class="n">_ExpandPointer</span><span class="p">],</span><span class="n">next_callback</span><span class="p">:</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span><span class="n">_ExpandPointer</span><span class="p">])</span><span class="o">-&gt;</span><span class="n">Optional</span><span class="p">[</span><span class="n">ActionsBlock</span><span class="p">]:</span>
         <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">usePrev</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="n">useNext</span><span class="p">):</span> <span class="k">return</span> <span class="kc">None</span>
         <span class="n">buttons</span><span class="o">=</span><span class="p">[]</span>
         <span class="k">if</span><span class="p">(</span><span class="n">usePrev</span><span class="p">):</span> <span class="n">buttons</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_button_to_replace_block</span><span class="p">(</span><span class="s2">&quot;:arrow_left:&quot;</span><span class="p">,</span><span class="o">*</span><span class="n">prev_callback</span><span class="p">))</span>
