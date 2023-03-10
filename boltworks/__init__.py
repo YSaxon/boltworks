@@ -1,4 +1,4 @@
-"""Top-level package for Slack Bolt UI Extensions."""
+"""Top-level package for Boltworks."""
 
 __author__ = """Yaakov Saxon"""
 __email__ = "ysaxon@gmail.com"

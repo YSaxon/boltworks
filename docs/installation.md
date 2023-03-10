@@ -2,21 +2,21 @@
 
 ## Stable release
 
-To install Slack Bolt UI Extensions, run this command in your
+To install Boltworks, run this command in your
 terminal:
 
 ``` console
 pip install boltworks
 ```
 
-This is the preferred method to install Slack Bolt UI Extensions, as it will always install the most recent stable release.
+This is the preferred method to install Boltworks, as it will always install the most recent stable release.
 
 If you don't have [pip][] installed, this [Python installation guide][]
 can guide you through the process.
 
 ## From source
 
-The source for Slack Bolt UI Extensions can be downloaded from
+The source for Boltworks can be downloaded from
 the [Github repo][].
 
 You can either clone the public repository:

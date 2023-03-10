@@ -1,4 +1,4 @@
-* Slack Bolt UI Extensions version:
+* Boltworks version:
 * Python version:
 * Operating System:
 
