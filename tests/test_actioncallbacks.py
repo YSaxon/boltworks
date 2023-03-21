@@ -61,7 +61,7 @@ def test_simple(fixture:Tuple[App, ActionCallbacks]):
         
     args_mock,respond_mock,_=mock_an_args()
     args_mock.action=dict(action_id=button['action_id'])
-    callbacks.do_callback_action(args=args_mock)
+    callbacks._do_callback_action(args=args_mock)
     respond_mock.assert_called_once_with("C")
     
 def test_closure(fixture:Tuple[App, ActionCallbacks]):
@@ -74,7 +74,7 @@ def test_closure(fixture:Tuple[App, ActionCallbacks]):
     
     args_mock,respond_mock,_=mock_an_args()
     args_mock.action=dict(action_id=button['action_id'])
-    callbacks.do_callback_action(args=args_mock)
+    callbacks._do_callback_action(args=args_mock)
     respond_mock.assert_called_once_with("A")
     
     
@@ -87,5 +87,5 @@ def test_partial_with_injected_var(fixture:Tuple[App, ActionCallbacks]):
           
     args_mock,respond_mock,_=mock_an_args()
     args_mock.action=dict(action_id=button['action_id'])
-    callbacks.do_callback_action(args=args_mock)
+    callbacks._do_callback_action(args=args_mock)
     respond_mock.assert_called_once_with("B")

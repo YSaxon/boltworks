@@ -27,10 +27,10 @@ class ViewCallbackFunction(Protocol):
 class ActionCallbacks:
     def __init__(self,app:App,cache:KVStoreWithSerializer) -> None:
         self._cache=cache
-        app.action(re.compile(prefix_for_callback+'.*'))(self.do_callback_action)
-        app.view(re.compile(prefix_for_callback+'.*'))(self.do_callback_view)
+        app.action(re.compile(prefix_for_callback+'.*'))(self._do_callback_action)
+        app.view(re.compile(prefix_for_callback+'.*'))(self._do_callback_view)
 
-    def do_callback_action(self,args:Args):
+    def _do_callback_action(self,args:Args):
         args.ack()
         if args.action:
             callback_key=args.action['action_id'][len(prefix_for_callback):]
@@ -55,12 +55,12 @@ class ActionCallbacks:
         self._cache[callback_key]=callback_action
         return button
 
-    def do_callback_view(self,args:Args,view):
+    def _do_callback_view(self,args:Args,view):
         args.ack()
         callback_key=view['callback_id'][len(prefix_for_callback):]
         values=dict(ChainMap(*view["state"]['values'].values())) #if "state" in view and "values" in view["state"] else None
         # values_copy=copy.deepcopy(values)
-        flat_values=self.flatten_values(values)#_copy)
+        flat_values=self._flatten_values(values)#_copy)
         callback_func:ViewCallbackFunction=self._cache[callback_key]
         callback_func(flat_values=flat_values,args=args)
 
@@ -86,7 +86,7 @@ class ActionCallbacks:
         callback_id=prefix_for_callback+callback_key
         return callback_id
 
-    def flatten_values(self,values):# this whole thing is specifically to parse the various types of values returned by different slack input fields and return a common value
+    def _flatten_values(self,values):# this whole thing is specifically to parse the various types of values returned by different slack input fields and return a common value
         return_dict:dict[str,str]=dict()
         for action_id,raw_value_dict in values.items():
             raw_value_dict.pop('type')
