@@ -388,9 +388,9 @@ class ButtonChildContainer(ChildNodeContainer):
 
 
 class MenuOption:
-    def __init__(self,label:str,nodes:list[TreeNode]):
+    def __init__(self,label:str,nodes:list[TreeNode]|TreeNode):
         self.label=label
-        self.nodes=nodes
+        self.nodes=nodes if isinstance(nodes,list) else [nodes]
     @staticmethod
     def fromJson(label:str,json:list|dict,pageination=15,optimize_blocks=True):
         children,numchildren=_jsonlike_to_treenode_and_truenum_children(json,pageination=pageination,optimize_blocks=optimize_blocks)
