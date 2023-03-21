@@ -20,6 +20,7 @@ def _find_test_creds():
     apptoken = os.getenv('APPTOKEN')
     channel = os.getenv('CHANNEL')
     webhook_url=os.getenv('WEBHOOK_URL')
+    weather_api_key=os.getenv('WEATHER_API_KEY')
     
     if not all((token, apptoken, channel)):
         # Try loading from .creds file
@@ -30,10 +31,11 @@ def _find_test_creds():
         apptoken = creds['apptoken']
         channel = creds['channel']
         webhook_url = creds['webhook_url']
+        weather_api_key = creds['weather_api_key']
     
-    return token, apptoken, channel, webhook_url
+    return token, apptoken, channel, webhook_url,weather_api_key
 
-TOKEN,APPTOKEN,TEST_CHANNEL,WEBHOOK_URL=_find_test_creds()
+TOKEN,APPTOKEN,TEST_CHANNEL,WEBHOOK_URL,WEATHER_API_KEY=_find_test_creds()
 DISK_CACHE_DIR=tempfile.mkdtemp()
 
 
