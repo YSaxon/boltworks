@@ -1,10 +1,15 @@
 from __future__ import annotations
+import requests
+import dill
+from functools import partial
+from common import TOKEN, APPTOKEN, WEATHER_API_KEY
+from common import DISK_CACHE_DIR
 from datetime import datetime
 import json
 from time import sleep
-from typing import Literal
+from typing import Literal,Optional
 import diskcache
-from slack_bolt import App
+from slack_bolt import App, Args
 from slack_bolt.adapter.socket_mode import SocketModeHandler
 from slack_sdk.models.blocks import SectionBlock
 import slack_sdk.models.blocks
@@ -13,27 +18,12 @@ import os
 
 from slack_sdk.models import blocks
 sys.path.append(os.path.dirname(os.path.realpath(__file__)) + "/../..")
-
 from boltworks import *
-
-from boltworks import TreeNode
-
-from common import DISK_CACHE_DIR
-
-
-from boltworks import ActionCallbacks
-from boltworks import DiskCacheKVStore
-
-from common import TOKEN,APPTOKEN
-sys.path.append(os.path.dirname(os.path.realpath(__file__)) + "/../..")
-from boltworks import ActionCallbacks, DiskCacheKVStore
 
 kvstore = DiskCacheKVStore(diskcache.core.Cache(DISK_CACHE_DIR))
 app = App(token=TOKEN)
 handler = SocketModeHandler(app, app_token=APPTOKEN)
-callbacks = ActionCallbacks(app, kvstore)
-
-
+callbacks = ActionCallbacks(app, kvstore.using_serializer(dill))
 
 
 #  {
@@ -75,11 +65,16 @@ callbacks = ActionCallbacks(app, kvstore)
 #                         "gb-defra-index": 1
 #                     }
 #                 },
-def format_day(weather_dict,units:Literal["imperial","metric"])->slack_sdk.models.blocks.Block:
-    simple_format=SectionBlock(
-        text=f"*{get_day_of_week(weather_dict['date'])}*: {weather_dict['day']['condition']['text']}\nHi {weather_dict['day']['maxtemp_f'] if units=='imperial' else weather_dict['day']['maxtemp_c']}° / Lo {weather_dict['day']['mintemp_f'] if units=='imperial' else weather_dict['day']['mintemp_c']}°",
-        accessory=blocks.ImageElement(image_url='http:'+weather_dict['day']['condition']['icon'],alt_text=weather_dict["day"]['condition']["text"])
-        )
+def format_day(weather_dict, units: Literal["imperial", "metric"]) -> slack_sdk.models.blocks.Block:
+    day_of_week = datetime.strptime(weather_dict['date'], "%Y-%m-%d").strftime("%A")
+    simple_format = SectionBlock(
+        text=f"*{day_of_week}*: {weather_dict['day']['condition']['text']}\nHi {weather_dict['day']['maxtemp_f'] if units=='imperial' else weather_dict['day']['maxtemp_c']}° / Lo {weather_dict['day']['mintemp_f'] if units=='imperial' else weather_dict['day']['mintemp_c']}°\n"
+        f"Precipitation: %{max(weather_dict['day']['daily_chance_of_rain'],weather_dict['day']['daily_chance_of_snow'])}\n"
+        f"Avg Humidity: %{weather_dict['day']['avghumidity']}\n"
+        f"Max Wind: {(str(weather_dict['day']['maxwind_mph'])+' mph') if units=='imperial' else (str(weather_dict['day']['maxwind_kph'])+' kph')}",
+        accessory=blocks.ImageElement(
+            image_url='http:' + weather_dict['day']['condition']['icon'], alt_text=weather_dict["day"]['condition']["text"])
+    )
     return simple_format
 
 # {
@@ -131,66 +126,80 @@ def format_day(weather_dict,units:Literal["imperial","metric"])->slack_sdk.model
 #                             "gb-defra-index": 2
 #                         }
 #                     },
-def format_hour(weather_dict,units:Literal["imperial","metric"])->slack_sdk.models.blocks.Block:
-    simple_format=SectionBlock(
-        text=f"*{get_hour_of_day(weather_dict['time'])}*: {weather_dict['condition']['text']} {weather_dict['temp_f'] if units=='imperial' else weather_dict['temp_c']}°, feels like {weather_dict['feelslike_f'] if units=='imperial' else weather_dict['feelslike_c']}°, %{weather_dict['chance_of_rain']} chance rain",
-        accessory=blocks.ImageElement(image_url='http:'+weather_dict['condition']['icon'],alt_text=weather_dict['condition']["text"])
-        )
+
+
+def format_hour(weather_dict, units: Literal["imperial", "metric"]) -> slack_sdk.models.blocks.Block:
+    hour_of_day = datetime.strptime(
+        weather_dict['time'], "%Y-%m-%d %H:%M").strftime("%-I%p")
+    simple_format = SectionBlock(
+        text=f"*{hour_of_day}*: {weather_dict['condition']['text']} | {weather_dict['temp_f'] if units=='imperial' else weather_dict['temp_c']}° | feels {weather_dict['feelslike_f'] if units=='imperial' else weather_dict['feelslike_c']}° | %{weather_dict['chance_of_rain']} rain | Wind {(str(weather_dict['wind_mph'])+' mph') if units=='imperial' else (str(weather_dict['wind_kph'])+' kph')} {weather_dict['wind_dir']}",
+        accessory=blocks.ImageElement(
+            image_url='http:' + weather_dict['condition']['icon'], alt_text=weather_dict['condition']["text"])
+    )
     return simple_format
 
-def get_day_of_week(date:str)->str:
-    return datetime.strptime(date,"%Y-%m-%d").strftime("%A")
-def get_hour_of_day(date:str)->str:
-    return datetime.strptime(date,"%Y-%m-%d %H:%M").strftime("%-I%p")
 
-def get_tree_node_day(weather_dict,units:Literal["imperial","metric"]):
-    return TreeNode(format_day(weather_dict,units),
-                  children_containers=[
-                     ButtonChildContainer.forJsonDetails(weather_dict['day']['air_quality'],'AirQuality'),
-                     ButtonChildContainer.forJsonDetails(weather_dict['astro'],'Astronomic'),
-                     ButtonChildContainer(child_nodes=[
-                         TreeNode.fromJson(format_hour(h,units),h) for h in weather_dict['hour']
-                         ],static_button_text='Hourly',child_pageination=6),
-                  ])
+def get_days_weather_node(weather_dict, units: Literal["imperial", "metric"]):
+    containers = [
+        ButtonChildContainer(child_nodes=
+                             [TreeNode.fromJson(format_hour(h, units), h) for h in weather_dict['hour']],
+                             static_button_text='Hourly Forecast', child_pageination=6),
+        ButtonChildContainer.forJsonDetails(weather_dict['astro'], 'Astronomic Data'),
+    ]
+    if 'air_quality' in weather_dict['day']:
+        containers.append(
+            ButtonChildContainer.forJsonDetails(weather_dict['day']['air_quality'], 'Air Quality')
+        )
+    return TreeNode(format_day(weather_dict, units),
+                    children_containers=containers)
 
-def format_root_weather(weather_dict):
-    return SectionBlock(text=f"Weather for {weather_dict['location']['name']}, retrieved {weather_dict['location']['localtime']}")
 
-def unit_weather_results(weather_dict,units:Literal["imperial","metric"]):
-    return TreeNode(" ",
-                   [
-                       ButtonChildContainer(child_nodes=[
-                         get_tree_node_day(d,units) for d in weather_dict['forecast']['forecastday']
-                         ],static_button_text='Forecast',child_pageination=6),
-                       ButtonChildContainer.forJsonDetails(weather_dict['location'],'Location'),
-                       ButtonChildContainer.forJsonDetails(weather_dict['alerts'],'Alerts'),
-                   ] )
-
-def get_root_weather_results_nodes(weather_dict,units:Literal["imperial","metric","not_specified"]="not_specified"):
-    if units=="not_specified":
-        nodes=[
-            TreeNode(format_root_weather(weather_dict),
-                StaticSelectMenuChildContainer(
-                    [
-                        MenuOption("Imperial",unit_weather_results(weather_dict,"imperial")),
-                        MenuOption("Metric",unit_weather_results(weather_dict,"metric")),]
-                ))]
+def get_root_weather_results_node(weather_dict, units: Literal["imperial", "metric", "not_specified"] = "not_specified"):
+    forecast: StaticSelectMenuChildContainer | ButtonChildContainer
+    if units == "not_specified":
+        forecast = StaticSelectMenuChildContainer(
+            [MenuOption(u.capitalize(), [get_days_weather_node(
+                d, u) for d in weather_dict['forecast']['forecastday']]) for u in ("imperial", "metric")],
+            placeholder="Forecast units", child_pageination=4
+        )
     else:
-        nodes=[TreeNode(format_root_weather(weather_dict)),
-               unit_weather_results(weather_dict,units)]
-    return nodes
-        
-        
-        
-    
-    
+        forecast = ButtonChildContainer(child_nodes=[
+            get_days_weather_node(d, units) for d in weather_dict['forecast']['forecastday']
+        ], static_button_text='Forecast', child_pageination=4)
+    node = TreeNode(
+        SectionBlock(
+            text=f"Weather for {weather_dict['location']['name']}, retrieved {weather_dict['location']['localtime']}"),
+        children_containers=[
+            forecast,
+            ButtonChildContainer.forJsonDetails(
+                weather_dict['location'], 'Location Data'),
+        ],
+    )
+    if 'alerts' in weather_dict and 'alert' in weather_dict['alerts']:
+        node.children_containers.append(ButtonChildContainer(
+            [TreeNode(
+                f"[{i+1}]: {a['event']}" + (f" for {a['areas']}" if a['areas'] else ""),
+                ButtonChildContainer.forJsonDetails(a)) for i, a in enumerate(weather_dict['alerts']['alert'])], 'Special Weather Alerts'))
+    return node
 
 
 handler.connect()
-with open("/Users/ysaxon/Desktop/slackbot/python/boltworks/tests/weather_demo_data.json",'r') as f:
-    weather_data= json.loads(f.read())
-treenodeui=TreeNodeUI(app,kvstore)
-treenodeui.post_treenodes("C04UQ8N7RU5",get_root_weather_results_nodes(weather_data),False)
+with open("/Users/ysaxon/Desktop/slackbot/python/boltworks/tests/weather_demo_data.json", 'r') as f:
+    weather_data = json.loads(f.read())
+treenodeui = TreeNodeUI(app, kvstore)
+treenodeui.post_single_node("C04UQ8N7RU5", get_root_weather_results_node(weather_data))
+
+
+@app.command("/weather")
+@argparse_command(automagic=True)
+def get_and_post_weather(args: Args, location: str, days: int = 3, *, aqi=True, alerts=True, units:list[Literal["metric","imperial"]]=["metric","imperial"]):
+    u = units[0] if len(units)==1 else "not_specified"
+    response = requests.get("http://api.weatherapi.com/v1/forecast.json", params=dict(key=WEATHER_API_KEY,
+                            q=location, days=days, aqi="yes" if aqi else "no", alerts="yes" if alerts else "no"))
+    weather = response.json()
+    node = get_root_weather_results_node(weather,u)
+    treenodeui.post_single_node(args.say, node)
+
 
 while True:
     sleep(1)
