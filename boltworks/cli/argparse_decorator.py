@@ -1,5 +1,5 @@
 import argparse
-from argparse import ArgumentParser
+from argparse import Action, ArgumentParser
 import copy
 import inspect
 import shlex
@@ -164,7 +164,7 @@ def argparse_command(argparser:Optional[ArgumentParser]=None,echo_back=True,do_a
 
 def automagically_add_args_to_argparser(decorated_function, midfunc_argparser, deco_extra_args_in_deco):
         supported_simple_types=[str,int,float,bool]
-        midfunc_argparser=copy.deepcopy(midfunc_argparser)#in case the same argparser is reused for other methods we don't want to pollute it
+        midfunc_argparser:ArgumentParser=copy.deepcopy(midfunc_argparser)#in case the same argparser is reused for other methods we don't want to pollute it
         type_hints=typing.get_type_hints(decorated_function)
         for arg in deco_extra_args_in_deco:
             arg_default = arg.default if arg.default is not arg.empty else None
@@ -214,14 +214,44 @@ def automagically_add_args_to_argparser(decorated_function, midfunc_argparser, d
                 elif nargs is None:
                     nargs="?"
             arg_type_str=format_arg_type(arg_type)
+            
+            add_argument_kwargs=dict(nargs=nargs,default=arg_default,help=f'{arg_type_str}{f", default: {arg_default}" if arg_default else ""}')
+            
             if not typing.get_origin(ultimate_type) == Literal:
-                midfunc_argparser.add_argument(arg.name if not arg.kind==arg.KEYWORD_ONLY else f"--{arg.name}",nargs=nargs,type=ultimate_type,default=arg_default,help=f'{arg_type_str}{f", default: {arg_default}" if arg_default else ""}')
+                if ultimate_type is bool:
+                    add_argument_kwargs["action"]=BoolAction
+                else:
+                    add_argument_kwargs["type"]=ultimate_type
             else:
-                choices=typing.get_args(ultimate_type)
-                midfunc_argparser.add_argument(arg.name if not arg.kind==arg.KEYWORD_ONLY else f"--{arg.name}",nargs=nargs,choices=choices,default=arg_default,help=f'{arg_type_str}{f", default: {arg_default}" if arg_default else ""}')
+                add_argument_kwargs["choices"]=typing.get_args(ultimate_type)            
+
+
+
+            midfunc_argparser.add_argument(arg.name if not arg.kind==arg.KEYWORD_ONLY else f"--{arg.name}",**add_argument_kwargs)
 
         return midfunc_argparser
 
+#adapted from https://stackoverflow.com/a/74272052/10773089
+class BoolAction(Action):
+    def __init__(
+            self,
+            option_strings,
+            dest,
+            nargs=None,
+            default: bool = False,
+            **kwargs,
+    ):
+        if nargs is not None and nargs != "?":
+            raise ValueError('nargs not allowed')
+        super().__init__(option_strings, dest, default=default, **kwargs)
+
+    def __call__(self, parser, namespace, values, option_string=None):
+        if isinstance(values, str):
+            values = values.lower()
+        b = values in [True, 1, 'true', 'yes', '1', 'on']
+        if not b and values not in [False, 0, 'false', 'no', '0', 'off']:
+            raise ValueError('Invalid boolean value "%s".')
+        setattr(namespace, self.dest, b)
 
 def format_arg_type(arg_type):
     arg_type_str = str(arg_type)
