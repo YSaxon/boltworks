@@ -5,7 +5,7 @@ import inspect
 import shlex
 import sys
 import typing
-from typing import Optional, Union
+from typing import Literal, Optional, Union
 
 from slack_bolt import Args
 from ..helper.slack_utils import safe_post_in_blockquotes
@@ -178,18 +178,18 @@ def automagically_add_args_to_argparser(decorated_function, midfunc_argparser, d
                 arg_type=type_hints[arg.name]
                 arg_type_generic_parent_type=typing.get_origin(arg_type)
                 is_simple_type=arg_type in supported_simple_types
-                is_generic_type=arg_type_generic_parent_type in [list,Union]
+                is_generic_type=arg_type_generic_parent_type in [list,Union,Literal]
                 type_error_message=f"Automagic failed, please use an ArgumentParser for `{arg.name}` or use a simpler type.\nThe method you are decorating has a parameter `{arg.name}` not filled by slack or an argparser, and we can't automagically extend your argparser because the parameter's type hint is {arg_type} rather than one of the following supported types: {','.join([str(t) for t in supported_simple_types])}, or an Optional[SupportedType], list[SupportedType], or Optional[list[SupportedType]]"
                 if not is_simple_type and not is_generic_type:#optional type ends up as Union, but we don't officially support Union
                     raise ValueError(type_error_message)
-                if is_simple_type:
+                if is_simple_type or arg_type_generic_parent_type==Literal:
                     nargs=None #exactly one
                     ultimate_type=arg_type
                 else:
                     arg_type_subtypes=typing.get_args(arg_type)
                     if arg_type_generic_parent_type is list:
                         if not len(arg_type_subtypes)==1 \
-                                or not arg_type_subtypes[0] in supported_simple_types:
+                                or not (arg_type_subtypes[0] in supported_simple_types or typing.get_origin(arg_type_subtypes[0])==Literal):
                             raise ValueError(type_error_message)#ValueError(f"The method you are decorating has a parameter `{arg}` not filled by slack or the argparser you provided, and we can't automagically extend your argparser because the parameter's type hint is a list not annotated by a single subtype in: {','.join(supported_simple_types)}")
                         nargs="+"
                         ultimate_type=arg_type_subtypes[0]
@@ -197,14 +197,14 @@ def automagically_add_args_to_argparser(decorated_function, midfunc_argparser, d
                         if not len(arg_type_subtypes)==2 or not type(None) in arg_type_subtypes:
                             raise ValueError(type_error_message)
                         subtype_of_optional=arg_type_subtypes[0] if arg_type_subtypes[1] is type(None) else arg_type_subtypes[1]
-                        if subtype_of_optional in supported_simple_types:
+                        if subtype_of_optional in supported_simple_types or typing.get_origin(subtype_of_optional)==Literal:
                             nargs="?"
                             ultimate_type=subtype_of_optional
                         else:
                             double_subtypes=typing.get_args(subtype_of_optional)
                             if not typing.get_origin(subtype_of_optional) is list \
                                         or not len(double_subtypes)==1\
-                                        or not double_subtypes[0] in supported_simple_types:
+                                        or not (double_subtypes[0] in supported_simple_types or typing.get_origin(double_subtypes[0])==Literal):
                                 raise ValueError(type_error_message)
                             nargs="*"
                             ultimate_type=double_subtypes[0]
@@ -214,7 +214,12 @@ def automagically_add_args_to_argparser(decorated_function, midfunc_argparser, d
                 elif nargs is None:
                     nargs="?"
             arg_type_str=format_arg_type(arg_type)
-            midfunc_argparser.add_argument(arg.name if not arg.kind==arg.KEYWORD_ONLY else f"--{arg.name}",nargs=nargs,type=ultimate_type,default=arg_default,help=f'{arg_type_str}{f", default: {arg_default}" if arg_default else ""}')
+            if not typing.get_origin(ultimate_type) == Literal:
+                midfunc_argparser.add_argument(arg.name if not arg.kind==arg.KEYWORD_ONLY else f"--{arg.name}",nargs=nargs,type=ultimate_type,default=arg_default,help=f'{arg_type_str}{f", default: {arg_default}" if arg_default else ""}')
+            else:
+                choices=typing.get_args(ultimate_type)
+                midfunc_argparser.add_argument(arg.name if not arg.kind==arg.KEYWORD_ONLY else f"--{arg.name}",nargs=nargs,choices=choices,default=arg_default,help=f'{arg_type_str}{f", default: {arg_default}" if arg_default else ""}')
+
         return midfunc_argparser
 
 
@@ -226,5 +231,6 @@ def format_arg_type(arg_type):
     arg_type_str = arg_type_str.rstrip("]")
     arg_type_str = arg_type_str.replace("List[", "list of ")
     arg_type_str = arg_type_str.replace("list[", "list of ")
+    arg_type_str = arg_type_str.replace("Literal[", "options: ")
     arg_type_str = arg_type_str.replace("Optional[", "(optional) ")
     return arg_type_str
