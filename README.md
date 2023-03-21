@@ -1,5 +1,10 @@
 # Boltworks
 
+![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)
+[![PyPI version](https://badge.fury.io/py/boltworks.svg)](https://badge.fury.io/py/boltworks)
+[![codecov](https://codecov.io/gh/YSaxon/boltworks/branch/master/graph/badge.svg?token=MYK47OLRPF)](https://codecov.io/gh/YSaxon/boltworks)
+![dev workflow](https://github.com/ysaxon/boltworks/actions/workflows/dev.yml/badge.svg)
+
 A collection of various extensions for Slack's bolt library to help you more easily make better slackbots.
 
 [docs](https://ysaxon.github.io/boltworks/)
