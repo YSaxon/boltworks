@@ -3,7 +3,7 @@ import requests
 import dill
 from functools import partial
 from common import TOKEN, APPTOKEN, WEATHER_API_KEY
-from common import DISK_CACHE_DIR
+from common import DISK_CACHE_DIR,TEST_CHANNEL
 from datetime import datetime
 import json
 from time import sleep
@@ -184,10 +184,12 @@ def get_root_weather_results_node(weather_dict, units: Literal["imperial", "metr
 
 
 handler.connect()
-with open("/Users/ysaxon/Desktop/slackbot/python/boltworks/tests/weather_demo_data.json", 'r') as f:
+
+
+with open("weather_demo_data.json", 'r') as f:
     weather_data = json.loads(f.read())
 treenodeui = TreeNodeUI(app, kvstore)
-treenodeui.post_single_node("C04UQ8N7RU5", get_root_weather_results_node(weather_data))
+treenodeui.post_single_node(TEST_CHANNEL, get_root_weather_results_node(weather_data))
 
 
 @app.command("/weather")
