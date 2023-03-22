@@ -69,8 +69,8 @@ def format_day(weather_dict, units: Literal["imperial", "metric"]) -> slack_sdk.
     day_of_week = datetime.strptime(weather_dict['date'], "%Y-%m-%d").strftime("%A")
     simple_format = SectionBlock(
         text=f"*{day_of_week}*: {weather_dict['day']['condition']['text']}\nHi {weather_dict['day']['maxtemp_f'] if units=='imperial' else weather_dict['day']['maxtemp_c']}° / Lo {weather_dict['day']['mintemp_f'] if units=='imperial' else weather_dict['day']['mintemp_c']}°\n"
-        f"Precipitation: %{max(weather_dict['day']['daily_chance_of_rain'],weather_dict['day']['daily_chance_of_snow'])}\n"
-        f"Avg Humidity: %{weather_dict['day']['avghumidity']}\n"
+        f"Precipitation: {max(weather_dict['day']['daily_chance_of_rain'],weather_dict['day']['daily_chance_of_snow'])}%\n"
+        f"Avg Humidity: {weather_dict['day']['avghumidity']}%\n"
         f"Max Wind: {(str(weather_dict['day']['maxwind_mph'])+' mph') if units=='imperial' else (str(weather_dict['day']['maxwind_kph'])+' kph')}",
         accessory=blocks.ImageElement(
             image_url='http:' + weather_dict['day']['condition']['icon'], alt_text=weather_dict["day"]['condition']["text"])
@@ -132,7 +132,7 @@ def format_hour(weather_dict, units: Literal["imperial", "metric"]) -> slack_sdk
     hour_of_day = datetime.strptime(
         weather_dict['time'], "%Y-%m-%d %H:%M").strftime("%-I%p")
     simple_format = SectionBlock(
-        text=f"*{hour_of_day}*: {weather_dict['condition']['text']} | {weather_dict['temp_f'] if units=='imperial' else weather_dict['temp_c']}° | feels {weather_dict['feelslike_f'] if units=='imperial' else weather_dict['feelslike_c']}° | %{weather_dict['chance_of_rain']} rain | Wind {(str(weather_dict['wind_mph'])+' mph') if units=='imperial' else (str(weather_dict['wind_kph'])+' kph')} {weather_dict['wind_dir']}",
+        text=f"*{hour_of_day}*: {weather_dict['condition']['text']} | {weather_dict['temp_f'] if units=='imperial' else weather_dict['temp_c']}° | feels {weather_dict['feelslike_f'] if units=='imperial' else weather_dict['feelslike_c']}° | {weather_dict['chance_of_rain']}% rain | Wind {(str(weather_dict['wind_mph'])+' mph') if units=='imperial' else (str(weather_dict['wind_kph'])+' kph')} {weather_dict['wind_dir']}",
         accessory=blocks.ImageElement(
             image_url='http:' + weather_dict['condition']['icon'], alt_text=weather_dict['condition']["text"])
     )
@@ -168,7 +168,7 @@ def get_root_weather_results_node(weather_dict, units: Literal["imperial", "metr
         ], static_button_text='Forecast', child_pageination=4)
     node = TreeNode(
         SectionBlock(
-            text=f"Weather for {weather_dict['location']['name']}, retrieved {weather_dict['location']['localtime']}"),
+            text=f"Weather for {weather_dict['location']['name']}, as of {weather_dict['location']['localtime']}"),
         children_containers=[
             forecast,
             ButtonChildContainer.forJsonDetails(
