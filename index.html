@@ -372,11 +372,18 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#cli---argparse-decorator" class="md-nav__link">
-    CLI - Argparse decorator
+  <a href="#getting-started" class="md-nav__link">
+    Getting Started
   </a>
   
-    <nav class="md-nav" aria-label="CLI - Argparse decorator">
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#easy-clis-with-the-argparse_command-decorator" class="md-nav__link">
+    Easy CLIs with the @argparse_command decorator
+  </a>
+  
+    <nav class="md-nav" aria-label="Easy CLIs with the @argparse_command decorator">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -388,6 +395,20 @@
         
       </ul>
     </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#threadcallbacks" class="md-nav__link">
+    ThreadCallbacks
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nodetreeui---dynamic-nested-information-formatter" class="md-nav__link">
+    NodeTreeUI - dynamic nested information formatter
+  </a>
   
 </li>
         
@@ -527,11 +548,18 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#cli---argparse-decorator" class="md-nav__link">
-    CLI - Argparse decorator
+  <a href="#getting-started" class="md-nav__link">
+    Getting Started
   </a>
   
-    <nav class="md-nav" aria-label="CLI - Argparse decorator">
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#easy-clis-with-the-argparse_command-decorator" class="md-nav__link">
+    Easy CLIs with the @argparse_command decorator
+  </a>
+  
+    <nav class="md-nav" aria-label="Easy CLIs with the @argparse_command decorator">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -543,6 +571,20 @@
         
       </ul>
     </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#threadcallbacks" class="md-nav__link">
+    ThreadCallbacks
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nodetreeui---dynamic-nested-information-formatter" class="md-nav__link">
+    NodeTreeUI - dynamic nested information formatter
+  </a>
   
 </li>
         
@@ -575,15 +617,24 @@
 
 <!-- BEGIN INCLUDE ../README.md -->
 <h2 id="boltworks">Boltworks<a class="headerlink" href="#boltworks" title="Permanent link">&para;</a></h2>
+<p><img alt="PyPI - Python Version" src="https://img.shields.io/pypi/pyversions/boltworks" />
+<a href="https://badge.fury.io/py/boltworks"><img alt="PyPI version" src="https://badge.fury.io/py/boltworks.svg" /></a>
+<a href="https://codecov.io/gh/YSaxon/boltworks"><img alt="codecov" src="https://codecov.io/gh/YSaxon/boltworks/branch/master/graph/badge.svg?token=MYK47OLRPF" /></a>
+<img alt="GitHub Workflow Status" src="https://img.shields.io/github/actions/workflow/status/ysaxon/boltworks/dev.yml" />
+<img alt="contributions welcome" src="https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat" /></p>
 <p>A collection of various extensions for Slack's bolt library to help you more easily make better slackbots.</p>
 <p><a href="https://ysaxon.github.io/boltworks/">docs</a></p>
 <p>The main features are:
 * Easy CLI parsing using the ArgParse library (or an automagic function parser that determines what params you need)
 * Easy callbacks on buttons and other GUI elements
 * A fast and flexible way of posting lots of information in a dynamically expandable GUI format</p>
-<h3 id="cli---argparse-decorator">CLI - Argparse decorator<a class="headerlink" href="#cli---argparse-decorator" title="Permanent link">&para;</a></h3>
+<h3 id="getting-started">Getting Started<a class="headerlink" href="#getting-started" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>pip install boltworks
+</code></pre></div></td></tr></table></div>
+<p>Follow the instructions at https://github.com/slackapi/bolt-python to begin setting up a Slackbot. Note that BoltWorks is not presently designed for async use, but any of the non-async handlers should work. For testing purposes, socket mode tends to be the easiest. All the rest of the demos will assume you've already instantiated a slack <code>app</code>.</p>
+<h3 id="easy-clis-with-the-argparse_command-decorator">Easy CLIs with the @argparse_command decorator<a class="headerlink" href="#easy-clis-with-the-argparse_command-decorator" title="Permanent link">&para;</a></h3>
 <p><a href="https://ysaxon.github.io/boltworks/api/#boltworks.cli.argparse_decorator">argparse_command in docs</a></p>
-<p>This allows you to use Python's argparse library to process complex command line flags and options in Slack Commands.</p>
+<p>This allows you to use Python's argparse library to process complex command line flags and options in Slack Commands. As usual, a --help flag will be generated for you. And if your method is type hinted, you can use Automagic mode to create a parser automagically.</p>
 <p>All Slack parameters will be passed through to your method; you can use the 'args' catchall, and/or individual arguments like 'respond' or 'context' etc
 All other parameters will be parsed from the command string when the command is run.</p>
 <h5 id="the-explicit-way">The explicit way<a class="headerlink" href="#the-explicit-way" title="Permanent link">&para;</a></h5>
@@ -611,54 +662,49 @@ All other parameters will be parsed from the command string when the command is 
 <span class="normal">22</span>
 <span class="normal">23</span>
 <span class="normal">24</span>
-<span class="normal">25</span>
-<span class="normal">26</span>
-<span class="normal">27</span>
-<span class="normal">28</span>
-<span class="normal">29</span>
-<span class="normal">30</span></pre></div></td><td class="code"><div><pre><span></span><code>from boltworks import argparse_command
-import argparse
+<span class="normal">25</span></pre></div></td><td class="code"><div><pre><span></span><code># example taken from the argparser docs: https://docs.python.org/3/howto/argparse.html#conflicting-options
 
-parser = argparse.ArgumentParser()
-parser.add_argument(&#39;main_input&#39;, help=&#39;the main input you want to give&#39;)
+parser = argparse.ArgumentParser(description=&quot;calculate X to the power of Y&quot;)
 group = parser.add_mutually_exclusive_group()
-group.add_argument(&#39;--verbose&#39;, action=&#39;store_true&#39;,
-                   help=&#39;increase output verbosity&#39;)
-group.add_argument(&#39;--quiet&#39;, action=&#39;store_true&#39;,
-                   help=&#39;decrease output verbosity&#39;)
-parser.add_argument(&#39;--algorithm&#39;, choices=[&#39;knn&#39;, &#39;svm&#39;, &#39;rf&#39;],
-                    help=&#39;choose the machine learning algorithm used&#39;)
-parser.add_argument(&#39;--numbers&#39;, nargs=&#39;+&#39;, type=int,
-                    help=&#39;list of numbers&#39;)
-parser.add_argument(&#39;-f&#39;, &#39;--flag&#39;, action=&#39;store_true&#39;,
-                    help=&#39;toggle the flag&#39;)
-
-@app.command(re.compile(&quot;/dothething&quot;))
+group.add_argument(&quot;-v&quot;, &quot;--verbose&quot;, action=&quot;store_true&quot;)
+group.add_argument(&quot;-q&quot;, &quot;--quiet&quot;, action=&quot;store_true&quot;)
+parser.add_argument(&quot;x&quot;, type=int, help=&quot;the base&quot;)
+parser.add_argument(&quot;y&quot;, type=int, help=&quot;the exponent&quot;)
+@app.command(&quot;/exponent&quot;)
 @argparse_command(parser)
-def do_the_thing(args: Args, main_input: str, verbose: bool, quiet: bool,
-                 algorithm: Optional[str], numbers: Optional[List[int]], flag: bool):
-    if numbers and not quiet:
-        args.respond(f&quot;your numbers sum to {sum(numbers)}&quot;)
-    #etcetera
+def power_calculator(respond,x,y,verbose,quiet):
+    answer = x**y
+    if quiet:
+        respond(text=answer)
+    elif verbose:
+        respond(text=f&quot;{x} to the power {y} equals {answer}&quot;)
+    else:
+        respond(text=f&quot;{x}^{y} == {answer}&quot;)
+
 
  ```
 
 #### The automagic way
 
-If you set automagic on, then providing an ArgParser is optional. Any type-hinted arguments not handled by an ArgParser you pass will be automagically added to an argparser with the appropriate names and types set. However there are some advanced features that aren&#39;t possible this way (such as mutually exclusive groups) and the help docs won&#39;t be as helpful.
+If you set automagic on, then providing an ArgParser is optional. Any type-hinted arguments not handled by an ArgParser you pass will be automagically added to an argparser with the appropriate names and types set. Lists, Optionals, Literals, default arguments, and primitive types all are supported.
 </code></pre></div></td></tr></table></div>
 from boltworks import argparse_command</p>
-<p>@app.command(re.compile("/performthemagic"))
+<p>@app.command(re.compile("/exponent"))
 @argparse_command(automagic=True)
-def perform_the_magic(args: Args, main_input: str, quiet:Optional[bool]=False, numbers: Optional[list[int]]=[]):
-    if numbers and not quiet:
-        args.respond(f"your numbers sum to {sum(numbers)}")
+def power_calculator(respond, x: int, y:int, mode:Optional[Literal["q","v"]]=None):
+    answer = x**y
+    if mode=="q":
+        respond(text=answer)
+    elif mode=="v":
+        respond(text=f"{x} to the power {y} equals {answer}")
+    else:
+        respond(text=f"{x}^{y} == {answer}")
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span>
 <span class="normal">3</span>
 <span class="normal">4</span>
 <span class="normal">5</span>
-<span class="normal">6</span></pre></div></td><td class="code"><div><pre><span></span><code>## GUI - ActionCallbacks
+<span class="normal">6</span></pre></div></td><td class="code"><div><pre><span></span><code>## ActionCallbacks - easy callback serialization
 
 [ActionCallbacks in docs](https://ysaxon.github.io/boltworks/api/#boltworks.cli.argparse_decorator)
 
@@ -667,20 +713,13 @@ These callbacks can themselves post UI elements with more callbacks for more com
 </code></pre></div></td></tr></table></div>
 DISK_CACHE_DIR="~/.diskcache"
 from boltworks import ActionCallbacks,DiskCacheKVSTore
-from diskcache import Cache #pip install diskcache</p>
-<p>disk_cache=DiskCacheKVSTore(Cache(directory=DISK_CACHE_DIR))
+from diskcache import Cache</p>
+<p>disk_cache=DiskCacheKVStore(Cache(directory=DISK_CACHE_DIR))
 callbacks=ActionCallbacks(app,disk_cache.using_serializer(dill))</p>
 <p>def get_elapsed_time(args:Args, start:datetime):
-    now = datetime.now()
-    diff = now - start
-    days, seconds = diff.days, diff.seconds
-    hours, minutes, seconds = seconds // 3600, (seconds % 3600) // 60, seconds % 60</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
-<span class="normal">2</span>
-<span class="normal">3</span></pre></div></td><td class="code"><div><pre><span></span><code>formatted_diff = f&quot;{days} day{&#39;s&#39; if days &gt; 1 else &#39;&#39;}, &quot;
-formatted_diff += f&quot;{hours:02d}:{minutes:02d}:{seconds:02d}&quot;
-args.respond(f&quot;time elapsed: {formatted_diff}&quot;)
-</code></pre></div></td></tr></table></div>
+    diff = datetime.now() - start
+    formatted_diff = f"{diff.seconds//3600:02d}:{(diff.seconds%3600)//60:02d}:{diff.seconds%60:02d}"
+    args.respond(f"time elapsed: {formatted_diff}")</p>
 <p>def start_timer(args:Args):
   now=datetime.now()
   get_elapsed_button=callbacks.get_button_register_callback("get elapsed time",partial(get_elapsed_time,start=now))
@@ -690,66 +729,15 @@ args.respond(f&quot;time elapsed: {formatted_diff}&quot;)
 <p>start_timer_button=callbacks.get_button_register_callback("start a timer",start_timer)
 timer_start_block=slack_sdk.models.blocks.SectionBlock(text="click here to start a timer",accessory=start_timer_button)
 app.client.chat_postMessage(blocks=[timer_start_block],channel=CHANNEL_ID)
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
-<span class="normal"> 2</span>
-<span class="normal"> 3</span>
-<span class="normal"> 4</span>
-<span class="normal"> 5</span>
-<span class="normal"> 6</span>
-<span class="normal"> 7</span>
-<span class="normal"> 8</span>
-<span class="normal"> 9</span>
-<span class="normal">10</span>
-<span class="normal">11</span>
-<span class="normal">12</span>
-<span class="normal">13</span>
-<span class="normal">14</span>
-<span class="normal">15</span>
-<span class="normal">16</span>
-<span class="normal">17</span>
-<span class="normal">18</span>
-<span class="normal">19</span>
-<span class="normal">20</span>
-<span class="normal">21</span>
-<span class="normal">22</span>
-<span class="normal">23</span>
-<span class="normal">24</span>
-<span class="normal">25</span>
-<span class="normal">26</span>
-<span class="normal">27</span>
-<span class="normal">28</span>
-<span class="normal">29</span>
-<span class="normal">30</span></pre></div></td><td class="code"><div><pre><span></span><code>## GUI - ThreadCallbacks
-
-Similiar to ActionCallbacks, this class allows you to register a message&#39;s `ts` (timestamp used by slack as a message id), so that your callback will be called any time a message is posted to that Thread.
-
-## GUI - NodeTreeUI
-
-[TreeNodeUI class in docs](https://ysaxon.github.io/boltworks/api/#boltworks.gui.treenodeui.TreeNodeUI)
-
-This is the beefiest module of the repo. It allows you to display complex nested information neatly, in a user-clickable, expanding and contracting view.
-The TreeNodeUI class handles all the logic of formatting these trees and responding to clicks.
-
-You just need to put your information into the tree datastructure, using the flexible TreeNode and TreeNodeContainer classes.
-
-Fundamentally a TreeNode has two things:
-
-* A format it itself displays when it is visible, either a string, or for more complex formatting, a Slack Block or list thereof
-* Children Nodes, organized into containers, that it can optionally hide or reveal.
-
-The visibility of these Children Nodes is controlled by UI elements.
-Fundamentally there are two types of Child Containers.
-
-* regular ChildContainers, which have a single list of Node Children; These are formatted as buttons and can be clicked to expand/show their children, or clicked again to contract/hide their children.
-* MenuChildContainers which contain within them multiple labeled lists of Node Children. These can be StaticMenus, OverflowMenus, or RadioButtons, and in each case, selecting an option reveals only its Children.
-
-All the other fields you will see within TreeNodes and NodeContainers are concerned with the exact details of how those containers are formatted.
-
-You can always directly instantiate a TreeNode or NodeContainer, but there are also static helper methods defined on some classes to help more easily construct frequently used variants of those classes.
-Among these are methods to convert a jsonlike recursively nested dict/list object into a nested TreeNode.
-
-(TODO: insert examples of TreeNode usage here)
-</code></pre></div></td></tr></table></div></p>
+```</p>
+<h3 id="threadcallbacks">ThreadCallbacks<a class="headerlink" href="#threadcallbacks" title="Permanent link">&para;</a></h3>
+<p>Similiar to ActionCallbacks, this class allows you to register a message's <code>ts</code> (timestamp used by slack as a message id), so that your callback will be called any time a message is posted to that Thread.</p>
+<h3 id="nodetreeui---dynamic-nested-information-formatter">NodeTreeUI - dynamic nested information formatter<a class="headerlink" href="#nodetreeui---dynamic-nested-information-formatter" title="Permanent link">&para;</a></h3>
+<p><strong><a href="treenode/">Main article: docs/treenode.md</a></strong></p>
+<p><a href="https://ysaxon.github.io/boltworks/api/#boltworks.gui.treenodeui.TreeNodeUI">(also see the TreeNodeUI class in docs)</a></p>
+<p>This module allows you to display complex nested information neatly, in a user-clickable, expanding and contracting view.
+The TreeNodeUI class handles all the logic of formatting these trees and responding to clicks.</p>
+<p><img alt="weather_demo" src="https://user-images.githubusercontent.com/11711101/226973190-cdd88994-848a-493a-816c-5ff86e8e8a78.gif" /></p>
 <!-- END INCLUDE -->
 
 

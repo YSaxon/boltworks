@@ -1,0 +1,1297 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
+    
+    
+      
+        <title>TreeNodeUI - Boltworks</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.975780f9.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.2505c338.min.css">
+        
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#treenodeui" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Boltworks" class="md-header__button md-logo" aria-label="Boltworks" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Boltworks
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              TreeNodeUI
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg>
+            </label>
+          
+        
+          
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/ysaxon/boltworks" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    boltworks
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href=".." class="md-tabs__link">
+      home
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../installation/" class="md-tabs__link">
+      installation
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../usage/" class="md-tabs__link">
+      usage
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../api/" class="md-tabs__link">
+      modules
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../contributing/" class="md-tabs__link">
+      contributing
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../authors/" class="md-tabs__link">
+      authors
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../history/" class="md-tabs__link">
+      history
+    </a>
+  </li>
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Boltworks" class="md-nav__button md-logo" aria-label="Boltworks" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Boltworks
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/ysaxon/boltworks" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    boltworks
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../installation/" class="md-nav__link">
+        installation
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../usage/" class="md-nav__link">
+        usage
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/" class="md-nav__link">
+        modules
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contributing/" class="md-nav__link">
+        contributing
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../authors/" class="md-nav__link">
+        authors
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../history/" class="md-nav__link">
+        history
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#treenodeui" class="md-nav__link">
+    TreeNodeUI
+  </a>
+  
+    <nav class="md-nav" aria-label="TreeNodeUI">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#treenodes" class="md-nav__link">
+    TreeNodes
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#childcontainers" class="md-nav__link">
+    ChildContainers
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-treenodeui-class" class="md-nav__link">
+    The TreeNodeUI class
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#instantiation" class="md-nav__link">
+    Instantiation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#simple-examples" class="md-nav__link">
+    Simple examples
+  </a>
+  
+    <nav class="md-nav" aria-label="Simple examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#months-of-the-year-pageinated" class="md-nav__link">
+    Months of the year, pageinated
+  </a>
+  
+    <nav class="md-nav" aria-label="Months of the year, pageinated">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#seasons-as-buttons-in-a-row-with-months-as-children" class="md-nav__link">
+    Seasons as buttons in a row, with months as children
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#seasons-as-a-staticselectmenu" class="md-nav__link">
+    Seasons as a StaticSelectMenu
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-a-json-adapter-helper-methods" class="md-nav__link">
+    Using a JSON adapter helper methods
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#posting-multiple-nodes-together-and-using-withsimplesidebutton" class="md-nav__link">
+    Posting multiple nodes together (and using withSimpleSideButton)
+  </a>
+  
+    <nav class="md-nav" aria-label="Posting multiple nodes together (and using withSimpleSideButton)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fancy-slack-block-formatting" class="md-nav__link">
+    Fancy Slack block formatting
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#putting-it-all-together-the-weather-forecast-example" class="md-nav__link">
+    Putting it all together: the Weather Forecast Example
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  <a href="https://github.com/ysaxon/boltworks/edit/master/docs/treenode.md" title="Edit this page" class="md-content__button md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+  </a>
+
+
+  <h1>TreeNodeUI</h1>
+
+<h2 id="treenodeui">TreeNodeUI<a class="headerlink" href="#treenodeui" title="Permanent link">&para;</a></h2>
+<p>This module allows you to display complex nested information neatly, in a user-clickable, expanding and contracting view.
+The TreeNodeUI class handles all the logic of formatting these trees and responding to clicks.</p>
+<p>You just need to put your information into a tree datastructure, using the flexible TreeNode and ChildContainer classes.</p>
+<h4 id="treenodes">TreeNodes<a class="headerlink" href="#treenodes" title="Permanent link">&para;</a></h4>
+<p>Fundamentally a TreeNode has two things:</p>
+<ul>
+<li>A format it itself displays when it is visible, either a string, or for more complex formatting, a Slack Block or list of Blocks</li>
+<li>Children Nodes, organized into containers associated with UI elements that the user can click to hide or reveal that part of the tree.</li>
+</ul>
+<h4 id="childcontainers">ChildContainers<a class="headerlink" href="#childcontainers" title="Permanent link">&para;</a></h4>
+<p>There are two types of Child Containers.</p>
+<ul>
+<li>ButtonChildContainers, which each have a single list of Node Children; These are formatted as buttons and can be clicked to alternately expand/contract their children.</li>
+<li>MenuChildContainers, which each contain within them multiple labeled lists of Node Children. These can be formatted as static menus, overflow menus [...] or radio buttons, and in each case, selecting an option reveals its Node children.</li>
+</ul>
+<p>Containers have a field for <code>child_pageination</code> which controls how many of its children are displayed at a time when they are visible; the rest will be accessed by clicking foward (and backward) buttons.</p>
+<h4 id="the-treenodeui-class">The TreeNodeUI class<a class="headerlink" href="#the-treenodeui-class" title="Permanent link">&para;</a></h4>
+<p>The TreeNodeUI class offers two methods for posting nodes (<code>post_single_node</code> and <code>post_treenodes</code>), and also handles all the logic of responding to UI callbacks and updating the tree.</p>
+<h4 id="instantiation">Instantiation<a class="headerlink" href="#instantiation" title="Permanent link">&para;</a></h4>
+<p>You can always directly instantiate a TreeNode or ChildContainer, but there are also static helper methods defined on some classes to help more easily construct frequently used variants of those classes. You can see some of them in action in the demos below. The most important of these are the ones which allow you to easily format an entire JSONlike object (ie what json.loads returns, a nested dict/list/primitive object) into a NodeTree.</p>
+<h3 id="simple-examples">Simple examples<a class="headerlink" href="#simple-examples" title="Permanent link">&para;</a></h3>
+<h4 id="months-of-the-year-pageinated">Months of the year, pageinated<a class="headerlink" href="#months-of-the-year-pageinated" title="Permanent link">&para;</a></h4>
+<p>Here's the simplest possible demo to get us started</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span></pre></div></td><td class="code"><div><pre><span></span><code>months=TreeNode(&quot;There are a lot of months in the year&quot;,
+                  [
+                      ButtonChildContainer([
+                          TreeNode(&quot;January&quot;),
+                          TreeNode(&quot;February&quot;),
+                          TreeNode(&quot;March&quot;),
+                          TreeNode(&quot;April&quot;),
+                          TreeNode(&quot;May&quot;),
+                          TreeNode(&quot;June&quot;),
+                          TreeNode(&quot;July&quot;),
+                          TreeNode(&quot;August&quot;),
+                          TreeNode(&quot;September&quot;),
+                          TreeNode(&quot;October&quot;),
+                          TreeNode(&quot;November&quot;),
+                          TreeNode(&quot;December&quot;),
+                      ], 
+                        child_pageination=4)
+                  ])
+
+treenodeui.post_single_node(TEST_CHANNEL,months)
+</code></pre></div></td></tr></table></div>
+<p>We're using a single ButtonChildContainer, which defaults to being on the side of the original node, and applying a pageination of 4 to the months, so they display 4 at a time.</p>
+<h5 id="seasons-as-buttons-in-a-row-with-months-as-children">Seasons as buttons in a row, with months as children<a class="headerlink" href="#seasons-as-buttons-in-a-row-with-months-as-children" title="Permanent link">&para;</a></h5>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span></pre></div></td><td class="code"><div><pre><span></span><code>seasons_buttons = TreeNode(&quot;These are the four seasons of a year&quot;,
+                  children_containers=[ 
+                   ButtonChildContainer([
+                          TreeNode(&quot;December&quot;),
+                          TreeNode(&quot;January&quot;),
+                          TreeNode(&quot;February&quot;)], static_button_text=&quot;Winter&quot;),
+
+                   ButtonChildContainer([
+                          TreeNode(&quot;March&quot;),
+                          TreeNode(&quot;April&quot;),
+                          TreeNode(&quot;May&quot;)], static_button_text=&quot;Spring&quot;),
+
+                   ButtonChildContainer([
+                          TreeNode(&quot;June&quot;),
+                          TreeNode(&quot;July&quot;),
+                          TreeNode(&quot;August&quot;)], static_button_text=&quot;Summer&quot;),
+
+                   ButtonChildContainer([
+                          TreeNode(&quot;September&quot;),
+                          TreeNode(&quot;October&quot;),
+                          TreeNode(&quot;November&quot;)], static_button_text=&quot;Fall&quot;),
+                  ])
+treenodeui.post_single_node(TEST_CHANNEL,seasons_buttons)
+</code></pre></div></td></tr></table></div>
+<h5 id="seasons-as-a-staticselectmenu">Seasons as a StaticSelectMenu<a class="headerlink" href="#seasons-as-a-staticselectmenu" title="Permanent link">&para;</a></h5>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span></pre></div></td><td class="code"><div><pre><span></span><code>seasons_menu = TreeNode(&quot;Which season would you like to know more about?&quot;,
+                  children_containers=StaticSelectMenuChildContainer([
+                      MenuOption(&quot;Winter&quot;, [
+                          TreeNode(&quot;December&quot;),
+                          TreeNode(&quot;January&quot;),
+                          TreeNode(&quot;February&quot;)
+                      ]),
+                      MenuOption(&quot;Spring&quot;, [
+                          TreeNode(&quot;March&quot;),
+                          TreeNode(&quot;April&quot;),
+                          TreeNode(&quot;May&quot;)
+                      ]),
+                      MenuOption(&quot;Summer&quot;, [
+                          TreeNode(&quot;June&quot;),
+                          TreeNode(&quot;July&quot;),
+                          TreeNode(&quot;August&quot;)
+                      ]),
+                      MenuOption(&quot;Fall&quot;, [
+                          TreeNode(&quot;September&quot;),
+                          TreeNode(&quot;October&quot;),
+                          TreeNode(&quot;November&quot;)
+                      ])
+                  ]))
+treenodeui.post_single_node(TEST_CHANNEL,seasons_menu)
+</code></pre></div></td></tr></table></div>
+<h5 id="using-a-json-adapter-helper-methods">Using a JSON adapter helper methods<a class="headerlink" href="#using-a-json-adapter-helper-methods" title="Permanent link">&para;</a></h5>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span></pre></div></td><td class="code"><div><pre><span></span><code>seasons_jsonlike={
+  &quot;Winter&quot;: [
+    {&quot;month&quot;: &quot;December&quot;},
+    {&quot;month&quot;: &quot;January&quot;},
+    {&quot;month&quot;: &quot;February&quot;}
+  ],
+  &quot;Spring&quot;: [
+    {&quot;month&quot;: &quot;March&quot;},
+    {&quot;month&quot;: &quot;April&quot;},
+    {&quot;month&quot;: &quot;May&quot;}
+  ],
+  &quot;Summer&quot;: [
+    {&quot;month&quot;: &quot;June&quot;},
+    {&quot;month&quot;: &quot;July&quot;},
+    {&quot;month&quot;: &quot;August&quot;}
+  ],
+  &quot;Fall&quot;: [
+    {&quot;month&quot;: &quot;September&quot;},
+    {&quot;month&quot;: &quot;October&quot;},
+    {&quot;month&quot;: &quot;November&quot;}
+  ]
+}
+
+seasons_json_node=TreeNode(&quot;There are a bunch of seasons and each one has three months&quot;,
+         ButtonChildContainer.forJsonDetails(seasons_json))
+
+treenodeui.post_single_node(TEST_CHANNEL,seasons_json_node)
+</code></pre></div></td></tr></table></div>
+<h4 id="posting-multiple-nodes-together-and-using-withsimplesidebutton">Posting multiple nodes together (and using withSimpleSideButton)<a class="headerlink" href="#posting-multiple-nodes-together-and-using-withsimplesidebutton" title="Permanent link">&para;</a></h4>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span></pre></div></td><td class="code"><div><pre><span></span><code>seasons_nodes = [
+    TreeNode.withSimpleSideButton(&quot;Winter&quot;, [
+        TreeNode(&quot;December&quot;),
+        TreeNode(&quot;January&quot;),
+        TreeNode(&quot;February&quot;)
+    ]),
+    TreeNode.withSimpleSideButton(&quot;Spring&quot;, [
+        TreeNode(&quot;March&quot;),
+        TreeNode(&quot;April&quot;),
+        TreeNode(&quot;May&quot;)
+    ]),
+    TreeNode.withSimpleSideButton(&quot;Summer&quot;, [
+        TreeNode(&quot;June&quot;),
+        TreeNode(&quot;July&quot;),
+        TreeNode(&quot;August&quot;)
+    ]),
+    TreeNode.withSimpleSideButton(&quot;Fall&quot;, [
+        TreeNode(&quot;September&quot;),
+        TreeNode(&quot;October&quot;),
+        TreeNode(&quot;November&quot;)
+    ])
+]
+
+treenodeui.post_treenodes(TEST_CHANNEL,seasons_nodes,global_header=&quot;These are the four seasons&quot;,post_all_together=False)
+</code></pre></div></td></tr></table></div>
+<h5 id="fancy-slack-block-formatting">Fancy Slack block formatting<a class="headerlink" href="#fancy-slack-block-formatting" title="Permanent link">&para;</a></h5>
+<p>All the examples until now have used simple strings for the formatting blocks, but you can be as fancy as you like, and use any Blocks that Slack provides</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">  1</span>
+<span class="normal">  2</span>
+<span class="normal">  3</span>
+<span class="normal">  4</span>
+<span class="normal">  5</span>
+<span class="normal">  6</span>
+<span class="normal">  7</span>
+<span class="normal">  8</span>
+<span class="normal">  9</span>
+<span class="normal"> 10</span>
+<span class="normal"> 11</span>
+<span class="normal"> 12</span>
+<span class="normal"> 13</span>
+<span class="normal"> 14</span>
+<span class="normal"> 15</span>
+<span class="normal"> 16</span>
+<span class="normal"> 17</span>
+<span class="normal"> 18</span>
+<span class="normal"> 19</span>
+<span class="normal"> 20</span>
+<span class="normal"> 21</span>
+<span class="normal"> 22</span>
+<span class="normal"> 23</span>
+<span class="normal"> 24</span>
+<span class="normal"> 25</span>
+<span class="normal"> 26</span>
+<span class="normal"> 27</span>
+<span class="normal"> 28</span>
+<span class="normal"> 29</span>
+<span class="normal"> 30</span>
+<span class="normal"> 31</span>
+<span class="normal"> 32</span>
+<span class="normal"> 33</span>
+<span class="normal"> 34</span>
+<span class="normal"> 35</span>
+<span class="normal"> 36</span>
+<span class="normal"> 37</span>
+<span class="normal"> 38</span>
+<span class="normal"> 39</span>
+<span class="normal"> 40</span>
+<span class="normal"> 41</span>
+<span class="normal"> 42</span>
+<span class="normal"> 43</span>
+<span class="normal"> 44</span>
+<span class="normal"> 45</span>
+<span class="normal"> 46</span>
+<span class="normal"> 47</span>
+<span class="normal"> 48</span>
+<span class="normal"> 49</span>
+<span class="normal"> 50</span>
+<span class="normal"> 51</span>
+<span class="normal"> 52</span>
+<span class="normal"> 53</span>
+<span class="normal"> 54</span>
+<span class="normal"> 55</span>
+<span class="normal"> 56</span>
+<span class="normal"> 57</span>
+<span class="normal"> 58</span>
+<span class="normal"> 59</span>
+<span class="normal"> 60</span>
+<span class="normal"> 61</span>
+<span class="normal"> 62</span>
+<span class="normal"> 63</span>
+<span class="normal"> 64</span>
+<span class="normal"> 65</span>
+<span class="normal"> 66</span>
+<span class="normal"> 67</span>
+<span class="normal"> 68</span>
+<span class="normal"> 69</span>
+<span class="normal"> 70</span>
+<span class="normal"> 71</span>
+<span class="normal"> 72</span>
+<span class="normal"> 73</span>
+<span class="normal"> 74</span>
+<span class="normal"> 75</span>
+<span class="normal"> 76</span>
+<span class="normal"> 77</span>
+<span class="normal"> 78</span>
+<span class="normal"> 79</span>
+<span class="normal"> 80</span>
+<span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span></pre></div></td><td class="code"><div><pre><span></span><code>from slack_sdk.models.blocks import *
+
+hotel_node=TreeNode.withSimpleSideButton(
+    &quot;We found *6 Hotels* in New Orleans, LA from *12/14 to 12/17*&quot;,
+    child_pageination=3,
+    children=[
+
+TreeNode([
+    SectionBlock(
+        text=&quot;*&lt;fakeLink.toHotelPage.com|Windsor Court Hotel&gt;*\n★★★★★\n$340 per night\nRated: 9.4 - Excellent&quot;,
+        accessory=ImageElement(
+            image_url=&quot;https://api.slack.com/img/blocks/bkb_template_images/tripAgent_1.png&quot;,
+            alt_text=&quot;Windsor Court Hotel thumbnail&quot;
+        )
+    ),
+    ContextBlock(elements=[
+        ImageElement(image_url=&quot;https://api.slack.com/img/blocks/bkb_template_images/tripAgentLocationMarker.png&quot;,
+                     alt_text=&quot;Location Pin Icon&quot;),
+        TextObject(type=&quot;plain_text&quot;,text=&quot;Location: Central Business District&quot;),
+
+    ]),
+    DividerBlock()
+]),
+
+TreeNode([SectionBlock(
+        text=&quot;*&lt;fakeLink.toHotelPage.com|The Ritz-Carlton New Orleans&gt;*\n★★★★★\n$340 per night\nRated: 9.1 - Excellent&quot;,
+        accessory=ImageElement(
+            image_url=&quot;https://api.slack.com/img/blocks/bkb_template_images/tripAgent_2.png&quot;,
+            alt_text=&quot;Ritz-Carlton New Orleans thumbnail&quot;
+        )
+    ),
+    ContextBlock(elements=[
+        ImageElement(image_url=&quot;https://api.slack.com/img/blocks/bkb_template_images/tripAgentLocationMarker.png&quot;,
+                     alt_text=&quot;Location Pin Icon&quot;),
+        TextObject(type=&quot;plain_text&quot;,text=&quot;Location: French Quarter&quot;),
+
+    ]),
+    DividerBlock()
+]),
+
+
+TreeNode(
+    [SectionBlock(
+        text=&quot;*&lt;fakeLink.toHotelPage.com|Omni Royal Orleans Hotel&gt;*\n★★★★★\n$419 per night\nRated: 8.8 - Excellent&quot;,
+        accessory=ImageElement(
+            image_url=&quot;https://api.slack.com/img/blocks/bkb_template_images/tripAgent_3.png&quot;,
+            alt_text=&quot;Omni Royal Orleans Hotel thumbnail&quot;
+        )
+    ),
+    ContextBlock(elements=[
+        ImageElement(image_url=&quot;https://api.slack.com/img/blocks/bkb_template_images/tripAgentLocationMarker.png&quot;,
+                     alt_text=&quot;Location Pin Icon&quot;),
+        TextObject(type=&quot;plain_text&quot;,text=&quot;Location: French Quarter&quot;),
+
+    ]),
+    DividerBlock()]
+),
+
+TreeNode([SectionBlock(
+        text=&quot;*&lt;fakeLink.toHotelPage.com|The Roosevelt New Orleans, A Waldorf Astoria Hotel&gt;*\n★★★★★\n$299 per night\nRated: 9.3 - Excellent&quot;,
+        accessory=ImageElement(
+            image_url=&quot;https://upload.wikimedia.org/wikipedia/en/2/2c/Ambassador_Hotel_Kaohsiung_at_Night.jpeg&quot;,
+            alt_text=&quot;The Roosevelt New Orleans, A Waldorf Astoria Hotel thumbnail&quot;
+        )
+    ),
+    ContextBlock(elements=[
+        ImageElement(image_url=&quot;https://api.slack.com/img/blocks/bkb_template_images/tripAgentLocationMarker.png&quot;,
+                     alt_text=&quot;Location Pin Icon&quot;),
+        TextObject(type=&quot;plain_text&quot;,text=&quot;Location: Central Business District&quot;),
+
+    ]),
+    DividerBlock(),
+    ]),
+
+TreeNode([
+   SectionBlock(
+        text=&quot;*&lt;fakeLink.toHotelPage.com|The Pontchartrain Hotel&gt;*\n★★★★\n$229 per night\nRated: 8.9 - Excellent&quot;,
+        accessory=ImageElement(
+            image_url=&quot;https://live.staticflickr.com/65535/50033621878_24a67c0281_b.jpg&quot;,
+            alt_text=&quot;The Pontchartrain Hotel thumbnail&quot;
+        )
+    ),
+    ContextBlock(elements=[
+        ImageElement(image_url=&quot;https://api.slack.com/img/blocks/bkb_template_images/tripAgentLocationMarker.png&quot;,
+                     alt_text=&quot;Location Pin Icon&quot;),
+        TextObject(type=&quot;plain_text&quot;,text=&quot;Location: Garden District&quot;),
+
+    ]),
+    DividerBlock(),
+    ]),
+
+TreeNode([
+    SectionBlock(
+        text=&quot;*&lt;fakeLink.toHotelPage.com|Ace Hotel New Orleans&gt;*\n★★★★\n$239 per night\nRated: 8.7 - Excellent&quot;,
+        accessory=ImageElement(
+            image_url=&quot;https://ygt-res.cloudinary.com/image/upload/c_fit,h_1280,q_80,w_1920/v1656076242/Venues/Hotel%20Las%20Palmeras/Las_Palmeras_Affiliated_Hotel_Pool.3428_gipozg.jpg&quot;,
+            alt_text=&quot;Ace Hotel New Orleans thumbnail&quot;
+        )
+    ),
+    ContextBlock(elements=[
+        ImageElement(image_url=&quot;https://api.slack.com/img/blocks/bkb_template_images/tripAgentLocationMarker.png&quot;,
+                     alt_text=&quot;Location Pin Icon&quot;),
+        TextObject(type=&quot;plain_text&quot;,text=&quot;Location: Warehouse District&quot;),
+
+    ]),
+    DividerBlock(),
+    ]),
+])
+
+treenodeui.post_single_node(TEST_CHANNEL,hotel_node,expand_first=True)
+</code></pre></div></td></tr></table></div>
+<h3 id="putting-it-all-together-the-weather-forecast-example">Putting it all together: the Weather Forecast Example<a class="headerlink" href="#putting-it-all-together-the-weather-forecast-example" title="Permanent link">&para;</a></h3>
+<p>Lets build a CLI command for requesting a weather forecast and displaying it as a NodeTree. </p>
+<p>First the CLI method. We'll use <code>api.weatherapi.com</code> for obtaining the forecast and build a CLI method around it, and create the parser automagically.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span>
+<span class="normal">9</span></pre></div></td><td class="code"><div><pre><span></span><code>@app.command(&quot;/weather&quot;)
+@argparse_command(automagic=True)
+def get_and_post_weather(args: Args, location: str, days: int = 3, *, aqi=True, alerts=True, units:list[Literal[&quot;metric&quot;,&quot;imperial&quot;]]=[&quot;metric&quot;,&quot;imperial&quot;]):
+    u = units[0] if len(units)==1 else &quot;not_specified&quot;
+    response = requests.get(&quot;http://api.weatherapi.com/v1/forecast.json&quot;, params=dict(key=WEATHER_API_KEY,
+                            q=location, days=days, aqi=&quot;yes&quot; if aqi else &quot;no&quot;, alerts=&quot;yes&quot; if alerts else &quot;no&quot;))
+    weather = response.json()
+    node = get_root_weather_results_node(weather,u)
+    treenodeui.post_single_node(args.say, node)
+</code></pre></div></td></tr></table></div>
+<p>It's usually easiest to start at the bottom level (the leaf nodes) and work your way backwards to the root from there. So let's start by formatting a node to show an hourly forecast.</p>
+<p>The following two functions will return a Slack Blocks representing an hourly and daily forecast respectively
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span>
+<span class="normal">9</span></pre></div></td><td class="code"><div><pre><span></span><code>def format_hour(weather_dict, units: Literal[&quot;imperial&quot;, &quot;metric&quot;]) -&gt; slack_sdk.models.blocks.Block:
+    hour_of_day = datetime.strptime(
+        weather_dict[&#39;time&#39;], &quot;%Y-%m-%d %H:%M&quot;).strftime(&quot;%-I%p&quot;)
+    simple_format = SectionBlock(
+        text=f&quot;*{hour_of_day}*: {weather_dict[&#39;condition&#39;][&#39;text&#39;]} | {weather_dict[&#39;temp_f&#39;] if units==&#39;imperial&#39; else weather_dict[&#39;temp_c&#39;]}° | feels {weather_dict[&#39;feelslike_f&#39;] if units==&#39;imperial&#39; else weather_dict[&#39;feelslike_c&#39;]}° | {weather_dict[&#39;chance_of_rain&#39;]}% rain | Wind {(str(weather_dict[&#39;wind_mph&#39;])+&#39; mph&#39;) if units==&#39;imperial&#39; else (str(weather_dict[&#39;wind_kph&#39;])+&#39; kph&#39;)} {weather_dict[&#39;wind_dir&#39;]}&quot;,
+        accessory=blocks.ImageElement(
+            image_url=&#39;http:&#39; + weather_dict[&#39;condition&#39;][&#39;icon&#39;], alt_text=weather_dict[&#39;condition&#39;][&quot;text&quot;])
+    )
+    return simple_format
+</code></pre></div></td></tr></table></div></p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span></pre></div></td><td class="code"><div><pre><span></span><code>def format_day(weather_dict, units: Literal[&quot;imperial&quot;, &quot;metric&quot;]) -&gt; slack_sdk.models.blocks.Block:
+    day_of_week = datetime.strptime(weather_dict[&#39;date&#39;], &quot;%Y-%m-%d&quot;).strftime(&quot;%A&quot;)
+    simple_format = SectionBlock(
+        text=f&quot;*{day_of_week}*: {weather_dict[&#39;day&#39;][&#39;condition&#39;][&#39;text&#39;]}\nHi {weather_dict[&#39;day&#39;][&#39;maxtemp_f&#39;] if units==&#39;imperial&#39; else weather_dict[&#39;day&#39;][&#39;maxtemp_c&#39;]}° / Lo {weather_dict[&#39;day&#39;][&#39;mintemp_f&#39;] if units==&#39;imperial&#39; else weather_dict[&#39;day&#39;][&#39;mintemp_c&#39;]}°\n&quot;
+        f&quot;Precipitation: {max(weather_dict[&#39;day&#39;][&#39;daily_chance_of_rain&#39;],weather_dict[&#39;day&#39;][&#39;daily_chance_of_snow&#39;])}%\n&quot;
+        f&quot;Avg Humidity: {weather_dict[&#39;day&#39;][&#39;avghumidity&#39;]}%\n&quot;
+        f&quot;Max Wind: {(str(weather_dict[&#39;day&#39;][&#39;maxwind_mph&#39;])+&#39; mph&#39;) if units==&#39;imperial&#39; else (str(weather_dict[&#39;day&#39;][&#39;maxwind_kph&#39;])+&#39; kph&#39;)}&quot;,
+        accessory=blocks.ImageElement(
+            image_url=&#39;http:&#39; + weather_dict[&#39;day&#39;][&#39;condition&#39;][&#39;icon&#39;], alt_text=weather_dict[&quot;day&quot;][&#39;condition&#39;][&quot;text&quot;])
+    )
+    return simple_format
+</code></pre></div></td></tr></table></div>
+<p>Now we make a method to create a node for the daily and hourly forecasts:
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span></pre></div></td><td class="code"><div><pre><span></span><code>def get_days_weather_node(weather_dict, units: Literal[&quot;imperial&quot;, &quot;metric&quot;]) -&gt; TreeNode:
+    containers = [
+        ButtonChildContainer(child_nodes=
+                             [TreeNode.fromJson(format_hour(h, units), h) for h in weather_dict[&#39;hour&#39;]],
+                             static_button_text=&#39;Hourly Forecast&#39;, child_pageination=6),
+        ButtonChildContainer.forJsonDetails(weather_dict[&#39;astro&#39;], &#39;Astronomic Data&#39;),
+    ]
+    if &#39;air_quality&#39; in weather_dict[&#39;day&#39;]:
+        containers.append(
+            ButtonChildContainer.forJsonDetails(weather_dict[&#39;day&#39;][&#39;air_quality&#39;], &#39;Air Quality&#39;)
+        )
+    return TreeNode(format_day(weather_dict, units),
+                    children_containers=containers)
+</code></pre></div></td></tr></table></div>
+So what we just did was define the child containers for the daily_forecast nodes. We set the hourly forecast button container to contain Nodes for every hour with the format from the method we defined before, and containing a detail button on their side for displaying the full Json of that hourly forecast. We are similiarly using a ButtonChildContainer.forJsonDetails for the daily air quality (if that exists in the forecast), and for the daily astronomical data.</p>
+<p>Now let's put it together into a RootNode.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span></pre></div></td><td class="code"><div><pre><span></span><code>def get_root_weather_results_node(weather_dict, units: Literal[&quot;imperial&quot;, &quot;metric&quot;, &quot;not_specified&quot;] = &quot;not_specified&quot;):
+    forecast: StaticSelectMenuChildContainer | ButtonChildContainer
+    if units == &quot;not_specified&quot;:
+        forecast = StaticSelectMenuChildContainer(
+            [MenuOption(u.capitalize(), 
+            [get_days_weather_node(d, u) for d in weather_dict[&#39;forecast&#39;][&#39;forecastday&#39;]]) for u in (&quot;imperial&quot;, &quot;metric&quot;)],
+            placeholder=&quot;Forecast units&quot;, child_pageination=4)
+    else:
+        forecast = ButtonChildContainer(child_nodes=[
+            get_days_weather_node(d, units) for d in weather_dict[&#39;forecast&#39;][&#39;forecastday&#39;]],
+            static_button_text=&#39;Forecast&#39;, child_pageination=4)
+
+    node = TreeNode(SectionBlock(
+            text=f&quot;Weather for {weather_dict[&#39;location&#39;][&#39;name&#39;]}, as of {weather_dict[&#39;location&#39;][&#39;localtime&#39;]}&quot;),
+            children_containers=[
+                forecast, #the button or menu we defined above
+                ButtonChildContainer.forJsonDetails(
+                    weather_dict[&#39;location&#39;], &#39;Location Data&#39;)])
+
+    if &#39;alerts&#39; in weather_dict and &#39;alert&#39; in weather_dict[&#39;alerts&#39;]:
+        node.children_containers.append(ButtonChildContainer(
+            [TreeNode(
+                f&quot;[{i+1}]: {a[&#39;event&#39;]}&quot; + (f&quot; for {a[&#39;areas&#39;]}&quot; if a[&#39;areas&#39;] else &quot;&quot;),
+                ButtonChildContainer.forJsonDetails(a)) for i, a in enumerate(weather_dict[&#39;alerts&#39;][&#39;alert&#39;])], &#39;Special Weather Alerts&#39;))
+    return node
+</code></pre></div></td></tr></table></div>
+<p>We're doing the same sort of thing here again. If we already know the user's units preference, we are the daily forecast into a button. Otherwise we will put a tree representing each unit type into a menu. Then we are putting that, and a JsonDetails button for location data, and another custom defined ButtonChildContainer for each special weather alert if those exist, into the new Node which we are returning.</p>
+<p>And just like that we have a super nice dynamically formatted weather forecast view!</p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    <a href="http://www.jieyu.ai" target="_blank" rel="noopener" title="Tweet" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+    </a>
+  
+    
+    
+    <a href="http://www.jieyu.ai" target="_blank" rel="noopener" title="Facebook" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg>
+    </a>
+  
+    
+    
+    <a href="https://github.com/ysaxon/boltworks" target="_blank" rel="noopener" title="Github" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    </a>
+  
+    
+    
+    <a href="mailto:ysaxon@gmail.com" target="_blank" rel="noopener" title="" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m20 8-8 5-8-5V6l8 5 8-5m0-2H4c-1.11 0-2 .89-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.indexes", "navigation.tabs", "navigation.instant", "navigation.tabs.sticky"], "search": "../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.5a2dcb6a.min.js"></script>
+      
+    
+    
+  </body>
+</html>
