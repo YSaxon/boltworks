@@ -17,57 +17,68 @@ The main features are:
 * Easy callbacks on buttons and other GUI elements
 * A fast and flexible way of posting lots of information in a dynamically expandable GUI format
 
-## CLI - Argparse decorator
+
+## Getting Started
+
+```
+pip install boltworks
+```
+
+Follow the instructions at https://github.com/slackapi/bolt-python to begin setting up a Slackbot. Note that BoltWorks is not presently designed for async use, but any of the non-async handlers should work. For testing purposes, socket mode tends to be the easiest.
+
+
+## Easy CLIs with the @argparse_command decorator
 
 [argparse_command in docs](https://ysaxon.github.io/boltworks/api/#boltworks.cli.argparse_decorator)
 
-This allows you to use Python's argparse library to process complex command line flags and options in Slack Commands.
+This allows you to use Python's argparse library to process complex command line flags and options in Slack Commands. A --help flag will be generated for you. And if your method is type hinted, you can use Automagic mode to create a parser automagically.
 
 All Slack parameters will be passed through to your method; you can use the 'args' catchall, and/or individual arguments like 'respond' or 'context' etc
 All other parameters will be parsed from the command string when the command is run.
 
 #### The explicit way
 
-```
-from boltworks import argparse_command
-import argparse
 
-parser = argparse.ArgumentParser()
-parser.add_argument('main_input', help='the main input you want to give')
+```
+# example taken from the argparser docs: https://docs.python.org/3/howto/argparse.html#conflicting-options
+
+parser = argparse.ArgumentParser(description="calculate X to the power of Y")
 group = parser.add_mutually_exclusive_group()
-group.add_argument('--verbose', action='store_true',
-                   help='increase output verbosity')
-group.add_argument('--quiet', action='store_true',
-                   help='decrease output verbosity')
-parser.add_argument('--algorithm', choices=['knn', 'svm', 'rf'],
-                    help='choose the machine learning algorithm used')
-parser.add_argument('--numbers', nargs='+', type=int,
-                    help='list of numbers')
-parser.add_argument('-f', '--flag', action='store_true',
-                    help='toggle the flag')
-                    
-@app.command(re.compile("/dothething"))
+group.add_argument("-v", "--verbose", action="store_true")
+group.add_argument("-q", "--quiet", action="store_true")
+parser.add_argument("x", type=int, help="the base")
+parser.add_argument("y", type=int, help="the exponent")
+@app.command("/exponent")
 @argparse_command(parser)
-def do_the_thing(args: Args, main_input: str, verbose: bool, quiet: bool,
-                 algorithm: Optional[str], numbers: Optional[List[int]], flag: bool):
-    if numbers and not quiet:
-        args.respond(f"your numbers sum to {sum(numbers)}")
-    #etcetera
+def power_calculator(respond,x,y,verbose,quiet):
+    answer = x**y
+    if quiet:
+        respond(text=answer)
+    elif verbose:
+        respond(text=f"{x} to the power {y} equals {answer}")
+    else:
+        respond(text=f"{x}^{y} == {answer}")
+                    
           
  ```
  
 #### The automagic way
 
-If you set automagic on, then providing an ArgParser is optional. Any type-hinted arguments not handled by an ArgParser you pass will be automagically added to an argparser with the appropriate names and types set. However there are some advanced features that aren't possible this way (such as mutually exclusive groups) and the help docs won't be as helpful.
+If you set automagic on, then providing an ArgParser is optional. Any type-hinted arguments not handled by an ArgParser you pass will be automagically added to an argparser with the appropriate names and types set. Lists, Optionals, Literals, default arguments, and primitive types all are supported.
 
 ```
 from boltworks import argparse_command
 
-@app.command(re.compile("/performthemagic"))
+@app.command(re.compile("/exponent"))
 @argparse_command(automagic=True)
-def perform_the_magic(args: Args, main_input: str, quiet:Optional[bool]=False, numbers: Optional[list[int]]=[]):
-    if numbers and not quiet:
-        args.respond(f"your numbers sum to {sum(numbers)}")
+def perform_the_magic(respond, x: int, y:int, mode:Optional[Literal["q","v"]]=None):
+    answer = x**y
+    if mode=="q":
+        respond(text=answer)
+    elif mode=="v":
+        respond(text=f"{x} to the power {y} equals {answer}")
+    else:
+        respond(text=f"{x}^{y} == {answer}")
 ```
 
 
@@ -80,8 +91,8 @@ These callbacks can themselves post UI elements with more callbacks for more com
 
 ```
 DISK_CACHE_DIR="~/.diskcache"
-from boltworks import ActionCallbacks,DiskCacheKVStore
-from diskcache import Cache #pip install diskcache
+from boltworks import ActionCallbacks,DiskCacheKVSTore
+from diskcache import Cache
 
 disk_cache=DiskCacheKVStore(Cache(directory=DISK_CACHE_DIR))
 callbacks=ActionCallbacks(app,disk_cache.using_serializer(dill))
@@ -118,27 +129,33 @@ Similiar to ActionCallbacks, this class allows you to register a message's `ts` 
 
 [TreeNodeUI class in docs](https://ysaxon.github.io/boltworks/api/#boltworks.gui.treenodeui.TreeNodeUI)
 
-This is the beefiest module of the repo. It allows you to display complex nested information neatly, in a user-clickable, expanding and contracting view.
+This module allows you to display complex nested information neatly, in a user-clickable, expanding and contracting view.
 The TreeNodeUI class handles all the logic of formatting these trees and responding to clicks.
 
-You just need to put your information into the tree datastructure, using the flexible TreeNode and TreeNodeContainer classes.
+You just need to put your information into a tree datastructure, using the flexible TreeNode and ChildContainer classes.
+
+### TreeNodes
 
 Fundamentally a TreeNode has two things:
 
-* A format it itself displays when it is visible, either a string, or for more complex formatting, a Slack Block or list thereof
-* Children Nodes, organized into containers, that it can optionally hide or reveal.
+* A format it itself displays when it is visible, either a string, or for more complex formatting, a Slack Block or list of Blocks
+* Children Nodes, organized into containers associated with UI elements that the user can click to hide or reveal that part of the tree.
 
-The visibility of these Children Nodes is controlled by UI elements.
-Fundamentally there are two types of Child Containers.
+### ChildContainers
 
-* regular ChildContainers, which have a single list of Node Children; These are formatted as buttons and can be clicked to expand/show their children, or clicked again to contract/hide their children.
-* MenuChildContainers which contain within them multiple labeled lists of Node Children. These can be StaticMenus, OverflowMenus, or RadioButtons, and in each case, selecting an option reveals only its Children.
+There are two types of Child Containers.
 
-All the other fields you will see within TreeNodes and NodeContainers are concerned with the exact details of how those containers are formatted.
+* ButtonChildContainers, which each have a single list of Node Children; These are formatted as buttons and can be clicked to alternately expand/contract their children.
+* MenuChildContainers, which each contain within them multiple labeled lists of Node Children. These can be formatted as static menus, overflow menus [...] or radio buttons, and in each case, selecting an option reveals its Node children.
 
-You can always directly instantiate a TreeNode or NodeContainer, but there are also static helper methods defined on some classes to help more easily construct frequently used variants of those classes.
-Among these are methods to convert a jsonlike recursively nested dict/list object into a nested TreeNode.
+Containers have a field for `child_pageination` which controls how many of its children are displayed at a time when they are visible; the rest will be accessed by clicking foward (and backward) buttons.
 
-(TODO: insert examples of TreeNode usage here)
+### The TreeNodeUI class
 
-```
+The TreeNodeUI class offers two methods for posting nodes (`post_single_node` and `post_treenodes`), and also handles all the logic of responding to UI callbacks and updating the tree.
+
+### Instantiation
+
+You can always directly instantiate a TreeNode or ChildContainer, but there are also static helper methods defined on some classes to help more easily construct frequently used variants of those classes. You can see some of them in action in the demos below. The most important of these are the ones which allow you to easily format an entire JSONlike object (ie what json.loads returns, a nested dict/list/primitive object) into a NodeTree.
+
+**[See demos here in treenode.md](docs/treenode.md)**
