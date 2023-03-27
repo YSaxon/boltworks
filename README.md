@@ -13,9 +13,10 @@ A collection of various extensions for Slack's bolt library to help you more eas
 [docs](https://ysaxon.github.io/boltworks/)
 
 The main features are:
+* A fast and flexible way of posting nested information in a dynamically expandable GUI format
 * Easy CLI parsing using the ArgParse library (or an automagic function parser that determines what params you need)
 * Easy callbacks on buttons and other GUI elements
-* A fast and flexible way of posting lots of information in a dynamically expandable GUI format
+
 
 
 ## Getting Started
@@ -26,6 +27,17 @@ pip install boltworks
 
 Follow the instructions at https://github.com/slackapi/bolt-python to begin setting up a Slackbot. Note that BoltWorks is not presently designed for async use, but any of the non-async handlers should work. For testing purposes, socket mode tends to be the easiest. All the rest of the demos will assume you've already instantiated a slack `app`.
 
+
+## NodeTreeUI - dynamic nested information formatter
+
+**[See main article: docs/treenode.md](docs/treenode.md)**
+
+[(also see the TreeNodeUI class in docs)](https://ysaxon.github.io/boltworks/api/#boltworks.gui.treenodeui.TreeNodeUI)
+
+This module allows you to display complex nested information neatly, in a user-clickable, expanding and contracting view.
+The TreeNodeUI class handles all the logic of formatting these trees and responding to clicks.
+
+![weather_demo](https://user-images.githubusercontent.com/11711101/226973190-cdd88994-848a-493a-816c-5ff86e8e8a78.gif)
 
 ## Easy CLIs with the @argparse_command decorator
 
@@ -117,15 +129,4 @@ app.client.chat_postMessage(blocks=[timer_start_block],channel=CHANNEL_ID)
 ## ThreadCallbacks
 
 Similiar to ActionCallbacks, this class allows you to register a message's `ts` (timestamp used by slack as a message id), so that your callback will be called any time a message is posted to that Thread.
-
-## NodeTreeUI - dynamic nested information formatter
-
-**[Main article: docs/treenode.md](docs/treenode.md)**
-
-[(also see the TreeNodeUI class in docs)](https://ysaxon.github.io/boltworks/api/#boltworks.gui.treenodeui.TreeNodeUI)
-
-This module allows you to display complex nested information neatly, in a user-clickable, expanding and contracting view.
-The TreeNodeUI class handles all the logic of formatting these trees and responding to clicks.
-
-![weather_demo](https://user-images.githubusercontent.com/11711101/226973190-cdd88994-848a-493a-816c-5ff86e8e8a78.gif)
 
