@@ -364,8 +364,8 @@ class ButtonChildContainer(ChildNodeContainer):
     Args:
         ChildNodeContainer (_type_): _description_
     """
-    def __init__(self,child_nodes:list[TreeNode],expand_button_format_string:str=NAMELESS_FMT_STR_EXPAND,collapse_button_format_string:str=NAMELESS_FMT_STR_COLLAPSE,static_button_text:Optional[str]=None,child_pageination:int=10):
-        self.child_nodes=child_nodes
+    def __init__(self,child_nodes:list[TreeNode]|TreeNode,expand_button_format_string:str=NAMELESS_FMT_STR_EXPAND,collapse_button_format_string:str=NAMELESS_FMT_STR_COLLAPSE,static_button_text:Optional[str]=None,child_pageination:int=10):
+        self.child_nodes=child_nodes if isinstance(child_nodes,list) else [child_nodes]
         self.expand_button_format_string=expand_button_format_string if not static_button_text else static_button_text
         self.collapse_button_format_string = collapse_button_format_string if not static_button_text else static_button_text
         self.child_pageination=child_pageination
