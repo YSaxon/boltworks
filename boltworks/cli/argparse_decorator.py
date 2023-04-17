@@ -5,7 +5,7 @@ import inspect
 import shlex
 import sys
 import typing
-from typing import Literal, Optional, Union
+from typing import Any, Literal, Optional, Union
 
 from slack_bolt import Args
 from ..helper.slack_utils import safe_post_in_blockquotes
@@ -208,6 +208,8 @@ def automagically_add_args_to_argparser(decorated_function, midfunc_argparser, d
                                 raise ValueError(type_error_message)
                             nargs="*"
                             ultimate_type=double_subtypes[0]
+                    else:
+                        raise ValueError(type_error_message)
             if arg_default:#because otherwise the default won't actually work
                 if nargs=="+":
                     nargs="*"
@@ -215,7 +217,7 @@ def automagically_add_args_to_argparser(decorated_function, midfunc_argparser, d
                     nargs="?"
             arg_type_str=format_arg_type(arg_type)
             
-            add_argument_kwargs=dict(nargs=nargs,default=arg_default,help=f'{arg_type_str}{f", default: {arg_default}" if arg_default else ""}')
+            add_argument_kwargs:dict[str,Any]=dict(nargs=nargs,default=arg_default,help=f'{arg_type_str}{f", default: {arg_default}" if arg_default else ""}')
             
             if not typing.get_origin(ultimate_type) == Literal:
                 if ultimate_type is bool:

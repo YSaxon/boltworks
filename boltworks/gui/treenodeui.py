@@ -12,7 +12,7 @@ from slack_sdk.models.blocks import (ActionsBlock, Block, ButtonElement,
                                      ContextBlock, InteractiveElement,
                                      OverflowMenuElement, RadioButtonsElement,
                                      SectionBlock, StaticSelectElement)
-from slack_sdk.models.blocks.block_elements import MarkdownTextObject, Option
+from slack_sdk.models.blocks.basic_components import MarkdownTextObject, Option
 from slack_sdk.webhook import WebhookResponse
 from ..gui.expandpointer import _ExpandPointer
 from ..helper.kvstore import KVStore
@@ -39,7 +39,7 @@ class TreeNodeUI:
         self.kvstore=kvstore #.namespaced(prefix_for_callback)
         self._slack_chat_client=app.client
 
-    def post_single_node(self,post_callable_or_channel:str|Say|Respond,node:TreeNode,alt_text:str=None,expand_first:bool=False):
+    def post_single_node(self,post_callable_or_channel:str|Say|Respond,node:TreeNode,alt_text:Optional[str]=None,expand_first:bool=False):
         """Posts a Single Node
         Args:
             post_callable_or_channel: either an instance of Respond or Say, or a channelid to post to
@@ -52,7 +52,7 @@ class TreeNodeUI:
         return say(text=alt_text or node.text_formatting_as_str(),
                                  blocks=self._format_tree(rootkey,expand_first=expand_first),unfurl_links=False)
 
-    def post_treenodes(self,post_callable_or_channel:str|Say|Respond,treenodes:list[TreeNode],post_all_together:bool,global_header:str=None,*,message_if_none:str=None,expand_first_if_seperate=False,**other_global_tn_kwargs):
+    def post_treenodes(self,post_callable_or_channel:str|Say|Respond,treenodes:list[TreeNode],post_all_together:bool,global_header:Optional[str]=None,*,message_if_none:Optional[str]=None,expand_first_if_seperate=False,**other_global_tn_kwargs):
         """Posts multiple Nodes together
 
         Args:
@@ -316,13 +316,13 @@ class TreeNode:
             toreturn+=f"({len(self.children_containers)} children_containers, total grandchildren_nodes {sum(len(cc.child_nodes) for cc in self.children_containers)}) "
         toreturn+=": "
         if isinstance(self.formatblocks,str): toreturn+=self.formatblocks
-        elif isinstance(self.formatblocks,SectionBlock): toreturn+=self.formatblocks.text.text
+        elif isinstance(self.formatblocks,SectionBlock): toreturn+=self.formatblocks.text.text if self.formatblocks.text else "<no text>"
         elif isinstance(self.formatblocks,list): toreturn+="\n".join([b.text.text if isinstance(b,SectionBlock) and b.text else b.to_dict() for b in self.formatblocks])
         return toreturn
 
     def text_formatting_as_str(n): #best try basis, not guaranteed to return correctly
         if isinstance(n.formatblocks,str): return n.formatblocks
-        elif isinstance(n.formatblocks,SectionBlock): return n.formatblocks.text.text
+        elif isinstance(n.formatblocks,SectionBlock): return n.formatblocks.text.text if n.formatblocks.text else "<no text>"
         elif isinstance(n.formatblocks,list): return "\n".join([fb.text.text for fb in n.formatblocks if 'text' in fb.attributes])
         else: return "" #or raise exception??
 
@@ -489,12 +489,11 @@ def slack_block_optimize_treenode(children:list[TreeNode])->list[TreeNode]:
         else: #a simple terminal block that we can combine with other ones to optimize block count:
             if isinstance(n.formatblocks,SectionBlock): n.formatblocks=n.formatblocks.text.text if n.formatblocks.text else '' #convert it to using strings
             elif isinstance(n.formatblocks,list) and isinstance(n.formatblocks[0],SectionBlock): n.formatblocks=n.formatblocks[0].text.text if n.formatblocks[0].text else ''
-
             if not combined_node_buffer:       #if no buffer, just start one
                 combined_node_buffer=n
             else:                       #otherwise add the string to existing combined_tn, assuming it fits in char limits
-                if len(combined_node_buffer.formatblocks)+len(n.formatblocks)+2 < 3000:#slack char limits for a single section block
-                    combined_node_buffer.formatblocks+="\n\n"+n.formatblocks
+                if len(combined_node_buffer.formatblocks)+len(n.formatblocks)+2 < 3000:#slack char limits for a single section block # type: ignore (we already checked that it is a str)
+                    combined_node_buffer.formatblocks+="\n\n"+n.formatblocks # type: ignore (we already checked that it is a str)
 
                 else: #if would be over char limits, we have no choice but to flush the buffer and restart
                     if combined_node_buffer: out_children.append(combined_node_buffer)
