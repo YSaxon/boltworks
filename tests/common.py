@@ -22,17 +22,16 @@ def _find_test_creds():
     webhook_url=os.getenv('WEBHOOK_URL')
     weather_api_key=os.getenv('WEATHER_API_KEY')
     
-    if not all((token, apptoken, channel)):
-        # Try loading from .creds file
-        with open('tests/.creds.yml', 'r') as f:
-            creds = yaml.safe_load(f)
+   # Try loading from .creds file
+    with open('tests/.creds.yml', 'r') as f:
+        creds = yaml.safe_load(f)
         
-        token = creds['token']
-        apptoken = creds['apptoken']
-        channel = creds['channel']
-        webhook_url = creds['webhook_url']
-        weather_api_key = creds['weather_api_key']
-    
+        token = creds.get('token', token)
+        apptoken = creds.get('apptoken', apptoken)
+        channel = creds.get('channel', channel)
+        webhook_url = creds.get('webhook_url', webhook_url)
+        weather_api_key = creds.get('weather_api_key', weather_api_key)
+
     return token, apptoken, channel, webhook_url,weather_api_key
 
 TOKEN,APPTOKEN,TEST_CHANNEL,WEBHOOK_URL,WEATHER_API_KEY=_find_test_creds()
