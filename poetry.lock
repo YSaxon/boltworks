@@ -101,7 +101,7 @@ files = [
 name = "cffi"
 version = "1.15.1"
 description = "Foreign Function Interface for Python calling C code."
-optional = false
+optional = true
 python-versions = "*"
 files = [
     {file = "cffi-1.15.1-cp27-cp27m-macosx_10_9_x86_64.whl", hash = "sha256:a66d3508133af6e8548451b25058d5812812ec3798c886bf38ed24a98216fab2"},
@@ -363,7 +363,7 @@ toml = ["tomli"]
 name = "cryptography"
 version = "41.0.6"
 description = "cryptography is a package which provides cryptographic recipes and primitives to Python developers."
-optional = false
+optional = true
 python-versions = ">=3.7"
 files = [
     {file = "cryptography-41.0.6-cp37-abi3-macosx_10_12_universal2.whl", hash = "sha256:0f27acb55a4e77b9be8d550d762b0513ef3fc658cd3eb15110ebbcbd626db12c"},
@@ -678,13 +678,13 @@ trio = ["async_generator", "trio"]
 
 [[package]]
 name = "jinja2"
-version = "3.0.3"
+version = "3.1.3"
 description = "A very fast and expressive template engine."
 optional = true
-python-versions = ">=3.6"
+python-versions = ">=3.7"
 files = [
-    {file = "Jinja2-3.0.3-py3-none-any.whl", hash = "sha256:077ce6014f7b40d03b47d1f1ca4b0fc8328a692bd284016f806ed0eaca390ad8"},
-    {file = "Jinja2-3.0.3.tar.gz", hash = "sha256:611bb273cd68f3b993fabdc4064fc858c5b47a973cb5aa7999ec1ba405c87cd7"},
+    {file = "Jinja2-3.1.3-py3-none-any.whl", hash = "sha256:7d6d50dd97d52cbc355597bd845fabfbac3f551e1f99619e39a35ce8c370b5fa"},
+    {file = "Jinja2-3.1.3.tar.gz", hash = "sha256:ac8bd6544d4bb2c9792bf3a159e80bba8fda7f07e81bc3aed565432d5925ba90"},
 ]
 
 [package.dependencies]
@@ -1116,7 +1116,7 @@ files = [
 name = "pycparser"
 version = "2.21"
 description = "C parser in Python"
-optional = false
+optional = true
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 files = [
     {file = "pycparser-2.21-py2.py3-none-any.whl", hash = "sha256:8ee45429555515e1f6b185e78100aea234072576aa43ab53aefcae078162fca9"},
@@ -1738,4 +1738,4 @@ test = ["black", "flake8", "flake8-docstrings", "isort", "pytest", "pytest-cov",
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.8.0,<4.0"
-content-hash = "7b6ed18e8154fda6ffa5d73297e4e4f8090ac98c70940fe352620c6bf6acea8f"
+content-hash = "869540398205f2e4560c45bb360bb2371c2b0d2cedce39a46eaaa8bec3df3c3b"
